@@ -31,11 +31,11 @@ namespace IdentityServer
             new ApiResource[]
             {
 
-                new ApiResource( "CrewCloudApi","MyApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } ),
-                new ApiResource( "CrewCloudCMSApi","MyCMSApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } )
+                new ApiResource( "ResourceApi","MyApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } ),
+                new ApiResource( "ResourceCMSApi","MyCMSApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } )
             {
             ApiSecrets = {
-                new Secret( "CrewCloudApiSecret".Sha256() )
+                new Secret( "ResourceApiSecret".Sha256() )
             }
             }
             };
@@ -61,8 +61,8 @@ namespace IdentityServer
                     {
                         "openid",
                         "profile",
-                        //"CrewCloudApi",
-                        //"CrewCloudCMSApi"
+                        //"ResourceApi",
+                        //"ResourceCMSApi"
                     },
                     RequireClientSecret = true,
                     RequirePkce = false,
@@ -87,7 +87,7 @@ namespace IdentityServer
                     {
                         "openid",
                         "profile",
-                        "CrewCloudApi"
+                        "ResourceApi"
                     },
                     AllowAccessTokensViaBrowser = true,
                      RequireClientSecret = false,
