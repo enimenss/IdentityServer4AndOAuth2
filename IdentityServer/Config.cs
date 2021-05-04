@@ -13,7 +13,7 @@ namespace IdentityServer
     public class Config
     {
 
-        public static IConfiguration Configuration { get; set; } 
+        public static IConfiguration Configuration { get; set; }
 
         public Config(IConfiguration configuration)
         {
@@ -22,16 +22,12 @@ namespace IdentityServer
 
         }
 
-       
-        public  IEnumerable<IdentityResource> Ids =>
+
+        public IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                 new IdentityResource(
-                    name: "custom.profile",
-                    displayName: "Custom Profile",
-                    claimTypes: new[] { "name", "email", "role","picture" })
+                new IdentityResources.Profile()
             };
 
         public  IEnumerable<ApiResource> Apis =>
@@ -109,10 +105,11 @@ namespace IdentityServer
                     {
                         "openid",
                         "profile",
-                        "custom.profile",
-                        "CrewCloudApi",
-                        "CrewCloudCMSApi"
+                        //"CrewCloudApi",
+                        //"CrewCloudCMSApi"
                     },
+                    RequireClientSecret = true,
+                    RequirePkce = false,
                     AllowOfflineAccess = true,
                 },
 

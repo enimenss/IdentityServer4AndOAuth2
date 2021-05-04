@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CrewCloudMVC.Models;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
@@ -34,13 +33,13 @@ namespace CrewCloudMVC.Controllers
 
         public IActionResult Login(string code)
         {
-            //return Challenge(new Microsoft.AspNetCore.Authentication.AuthenticationProperties
-            //{
-            //    RedirectUri = "/Home/Index",
+            return Challenge(new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+            {
+                RedirectUri = "/Home/Index",
 
-            //}, "OpenIdConnect");
+            }, "OpenIdConnect");
 
-            return Redirect("https://localhost:44323/connect/authorize?client_id=Test&response_type=code&redirect_uri=http://localhost:5012/Home/Login&scope=openid profile custom.profile CrewCloudApi CrewCloudCMSApi");
+            //return Redirect("https://localhost:44323/connect/authorize?client_id=Test&response_type=code&redirect_uri=http://localhost:5012/Home/Login&scope=openid profile custom.profile CrewCloudApi CrewCloudCMSApi");
         }
 
 

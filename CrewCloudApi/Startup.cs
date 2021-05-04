@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CrewCloudRepository.Models;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,8 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using CrewCloudRepository.Contracts;
-using CrewCloudRepository.Repository;
 using AutoMapper;
 
 namespace CrewCloudApi
@@ -47,17 +44,6 @@ namespace CrewCloudApi
                 options.Filters.Add(new AuthorizeFilter());
             }).AddAuthorization();
 
-            services.AddDbContextPool<CrewCloudDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("connectionString"), x => x.MigrationsAssembly("CrewCloudRepository")));
-
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-            services.AddEntityFrameworkSqlServer();
-
-            services.AddDbContextPool<CrewCloudDBContext>((serviceProvider, optionsBuilder) =>
-            {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("connectionString"));
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
 
             services.AddAutoMapper(typeof(Startup));
 

@@ -16,9 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net.Http;
-using CrewCloudRepository.Models;
-using CrewCloudRepository.Repository;
-using CrewCloudRepository.Contracts;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -62,19 +59,6 @@ namespace IdentityServer
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //CrewCloudRepositoryDB
-            services.AddDbContextPool<CrewCloudDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"), x => x.MigrationsAssembly("CrewCloudRepository")));
-
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-            services.AddEntityFrameworkSqlServer();
-
-            services.AddDbContextPool<CrewCloudDBContext>((serviceProvider, optionsBuilder) =>
-            {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"));
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
-            //The end of kaos
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {          

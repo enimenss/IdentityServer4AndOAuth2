@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CrewCloudCMSApi.Data;
 using CrewCloudCMSApi.IdentityModels;
-using CrewCloudRepository.Contracts;
-using CrewCloudRepository.Models;
-using CrewCloudRepository.Repository;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,18 +41,6 @@ namespace CrewCloudCMSApi
             {
                //options.Filters.Add(new AuthorizeFilter());
             }).AddAuthorization();
-
-            services.AddDbContextPool<CrewCloudDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"), x => x.MigrationsAssembly("CrewCloudRepository")));
-
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-            services.AddEntityFrameworkSqlServer();
-
-            services.AddDbContextPool<CrewCloudDBContext>((serviceProvider, optionsBuilder) =>
-            {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"));
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
 
             services.AddIdentity<AppUser, AppRole>()
              .AddEntityFrameworkStores<ApplicationDbContext>();

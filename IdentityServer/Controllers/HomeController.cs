@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using IdentityServer.Models;
 using IdentityServer.IdentityModels;
 using Microsoft.AspNetCore.Identity;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using IdentityServer4.Services;

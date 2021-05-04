@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using IdentityServer.Enums;
 using IdentityServer.ViewModels;
 using IdentityServer.IdentityModels;
-using CrewCloudRepository.Contracts;
-using CrewCloudRepository.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,19 +30,17 @@ namespace IdentityServer.Controllers
         private CustomResult customResult = new CustomResult();
         private UserManager<AppUser> _userManager { get; }
 
-        private IRepositoryWrapper _repoWrapper;
         private SignInManager<AppUser> _signInManager { get; }
 
         private IIdentityServerInteractionService _interaction;
 
         private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IRepositoryWrapper repoWrapper, IIdentityServerInteractionService interaction, IEmailSender emailSender)
+        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IIdentityServerInteractionService interaction, IEmailSender emailSender)
      {
 
             _userManager = userManager;
             _signInManager = signInManager;
-            _repoWrapper = repoWrapper;
             _interaction = interaction;
             _emailSender = emailSender;
      }

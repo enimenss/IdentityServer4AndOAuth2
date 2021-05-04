@@ -11,9 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CrewCloudMVC.Models;
-using CrewCloudRepository.Models;
-using CrewCloudRepository.Contracts;
-using CrewCloudRepository.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -34,20 +31,7 @@ namespace CrewCloudMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            //CrewCloudRepositoryDB
-            services.AddDbContextPool<CrewCloudDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"), x => x.MigrationsAssembly("CrewCloudRepository")));
 
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-            services.AddEntityFrameworkSqlServer();
-
-            services.AddDbContextPool<CrewCloudDBContext>((serviceProvider, optionsBuilder) =>
-            {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("CrewCloudDBConnection"));
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
-            //The end of kaos
 
 
 
@@ -73,20 +57,17 @@ namespace CrewCloudMVC
                  options.ResponseType ="code id_token";
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
-                 options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                     NameClaimType = "name",
-                     RoleClaimType = "role"
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidAudience = "MVC"
                   };
-                options.RequireHttpsMetadata = false;
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
-                options.Scope.Add("custom.profile");
-                options.Scope.Add("offline_access");
-                options.Scope.Add("CrewCloudApi");
-                options.Scope.Add("CrewCloudCMSApi");
-                options.ClaimActions.MapJsonKey("role", "role", "role");
-                options.ClaimActions.MapJsonKey("picture", "picture", "picture");
+                  options.RequireHttpsMetadata = false;
+                    //options.Scope.Add("openid");
+                    //options.Scope.Add("profile");
+                  //options.Scope.Add("CrewCloudApi");
+                  //options.Scope.Add("CrewCloudCMSApi");
+                  options.Scope.Add("offline_access");
+                  options.ClaimActions.MapJsonKey("role", "role", "role");
                   options.Events = new OpenIdConnectEvents
                   {
                     OnUserInformationReceived = context =>

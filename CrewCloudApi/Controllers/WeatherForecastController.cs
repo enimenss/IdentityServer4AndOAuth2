@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CrewCloudRepository.Contracts;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,16 +24,13 @@ namespace CrewCloudApi.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private IRepositoryWrapper _repoWrapper;
-
         private readonly ILogger<WeatherForecastController> _logger;
 
 
         private IHttpContextAccessor _httpContextAccessor;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger,IHttpContextAccessor httpContextAccessor, IRepositoryWrapper repoWrapper)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,IHttpContextAccessor httpContextAccessor)
         {
-            _repoWrapper = repoWrapper;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
         }
