@@ -3,6 +3,7 @@ using IdentityServer.IdentityModels;
 using IdentityServer.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -62,6 +63,7 @@ namespace IdentityServer
                               options.Events.RaiseFailureEvents = true;
                               options.Events.RaiseInformationEvents = true;
                               options.Events.RaiseSuccessEvents = true;
+                           //   options.Authentication.CheckSessionCookieSameSiteMode = SameSiteMode.Lax; // for idsrv.session cookie to run over http
                           }
                 )
                 .AddDeveloperSigningCredential()
@@ -73,8 +75,14 @@ namespace IdentityServer
                 .AddProfileService<ProfileService<AppUser>>();
 
 
+
                // not recommended for production - you need to store your key material somewhere secure
                builder.AddDeveloperSigningCredential();
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.SameSite = SameSiteMode.Lax;
+            //});
 
 
         }

@@ -62,10 +62,13 @@ namespace ClientMVC
                     //options.Scope.Add("profile");
                   //options.Scope.Add("ResourceApi");
                   //options.Scope.Add("ResourceCMSApi");
+
                   options.Scope.Add("offline_access");
                   options.ClaimActions.MapJsonKey("role", "role", "role");
+                  options.ClaimActions.MapJsonKey("name", "name", "name");
                   options.Events = new OpenIdConnectEvents
                   {
+                      
                     OnUserInformationReceived = context =>
                       {            
                         return Task.FromResult(0);
