@@ -39,9 +39,5 @@
   
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Providers\" />
-    <Folder Include="Repositories\Interfaces\" />
   </ItemGroup>
 </Project>

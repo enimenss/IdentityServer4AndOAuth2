@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+﻿
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -48,47 +45,6 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "MobileApp",
-                    ClientSecrets =
-                    {
-                        new Secret("MobileAppSecret".Sha256())
-                    },
-                    //http://docs.identityserver.io/en/latest/topics/grant_types.html
-                    AllowedGrantTypes = new[] { GrantType.ResourceOwnerPassword },
-                    AllowOfflineAccess = true,
-                    AllowedScopes =
-                    {
-                        "openid",
-                        "CrewCloudApi",
-                        "custom.profile",
-                        IdentityServerConstants.StandardScopes.OfflineAccess
-                    },
-
-                },
-                new Client
-                {
-                    ClientId = "ExternalProviders",
-                    AllowedGrantTypes = new[] {"external" },
-                    ClientSecrets =
-                    {
-                        new Secret("ExternalProvidersSecret".Sha256())
-                    },
-                    AllowedScopes =
-                    {
-
-                        "CrewCloudApi"
-                    },
-                    AccessTokenType = AccessTokenType.Jwt,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                   // AccessTokenLifetime = 86400,
-                    AllowOfflineAccess = true,
-                    IdentityTokenLifetime = 86400,
-                    AlwaysSendClientClaims = true,
-                    Enabled = true,
-                },
-
-                new Client
-                {
                     ClientId = "MVC",
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Hybrid,
@@ -112,56 +68,8 @@ namespace IdentityServer
                     RequirePkce = false,
                     AllowOfflineAccess = true,
                 },
-
-                new Client
-                {
-                    ClientId = "Test",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.Code,
-
-                    ClientSecrets =
-                    {
-                        new Secret("Test".Sha256())
-                    },
-
-                    RedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/Home/Login" },
-                    PostLogoutRedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/Home/Logout" },
-                    AccessTokenLifetime = 86400,
-                    AllowedScopes =
-                    {
-                        "openid",
-                        "profile",
-                        "custom.profile",
-                        "CrewCloudApi",
-                        "CrewCloudCMSApi"
-                    },
-                    AllowOfflineAccess = true,
-                },
-
-                  new Client
-                {
-                    ClientId = "AngularImplicit",
-                    ClientName = "Angular Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedCorsOrigins = { "http://localhost:4200" },
-                    ClientSecrets =
-                    {
-                        new Secret("AngularSecret".Sha256())
-                    },
-
-                    RedirectUris ={ "http://localhost:4200" },
-                    PostLogoutRedirectUris = { "http://localhost:4200" },
-                    AccessTokenLifetime = 86400,
-                    AllowedScopes =
-                    {
-                        "openid",
-                        "profile",
-                        "CrewCloudApi"
-                    },
-                    AllowAccessTokensViaBrowser = true
-                },
                  
-                  new Client
+                 new Client
                 {
                     ClientId = "AngularCode",
                     ClientName = "Angular Client",
@@ -185,8 +93,6 @@ namespace IdentityServer
                      RequireClientSecret = false,
                       RequirePkce = true
                 }
-
-
 
             };
     }

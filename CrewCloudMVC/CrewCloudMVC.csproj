@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Extensions\**" />
     <Content Remove="Data\**" />
+    <Content Remove="Extensions\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Extensions\**" />
     <None Remove="Data\**" />
+    <None Remove="Extensions\**" />
   </ItemGroup>
 
 
@@ -28,11 +32,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

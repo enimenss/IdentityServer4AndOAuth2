@@ -1,22 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using CrewCloudCMSApi.Data;
 using CrewCloudCMSApi.IdentityModels;
+using CrewCloudCMSApi.Persistence;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace CrewCloudCMSApi
 {
@@ -33,14 +24,14 @@ namespace CrewCloudCMSApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddControllers();
             services.AddMvcCore(options =>
             {
                //options.Filters.Add(new AuthorizeFilter());
             }).AddAuthorization();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<AppUser, AppRole>()
              .AddEntityFrameworkStores<ApplicationDbContext>();

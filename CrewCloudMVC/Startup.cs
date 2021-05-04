@@ -32,12 +32,8 @@ namespace CrewCloudMVC
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-
-
             services.AddControllersWithViews();
             services.AddRazorPages();
-
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -97,7 +93,6 @@ namespace CrewCloudMVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -108,19 +103,12 @@ namespace CrewCloudMVC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
            
-
             app.UseCookiePolicy();
-
-          
-
-          
 
             app.UseRouting();
            
             app.UseAuthentication();
             app.UseAuthorization();
-
-
 
             app.UseEndpoints(endpoints =>
             {
