@@ -60,35 +60,27 @@ namespace IdentityServer.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Logout(string returnUrl = null)
+        public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-
             var logoutId = this.Request.Query["logoutId"].ToString();
 
-            if (returnUrl != null)
-            {
-                return LocalRedirect(returnUrl);
-            }
-            else if (!string.IsNullOrEmpty(logoutId))
-            {
-                var logoutContext = await this._interaction.GetLogoutContextAsync(logoutId);
-                returnUrl = logoutContext.PostLogoutRedirectUri;
+            ViewData["LogoutId"] = logoutId;
 
-                if (!string.IsNullOrEmpty(returnUrl))
-                {
-                    return this.Redirect(returnUrl);
-                }
-                else
-                {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            var logoutContext = await this._interaction.GetLogoutContextAsync(logoutId);
+            var returnUrl = logoutContext.PostLogoutRedirectUri;
+
+            await _signInManager.SignOutAsync();
+            return this.Redirect(returnUrl);
+
+        }
+
+
 
 
         #region Helpers
