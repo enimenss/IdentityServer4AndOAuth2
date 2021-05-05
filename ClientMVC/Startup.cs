@@ -55,6 +55,7 @@ namespace ClientMVC
                  options.GetClaimsFromUserInfoEndpoint = true;
                   options.TokenValidationParameters = new TokenValidationParameters
                   {
+                      NameClaimType = "email",
                       ValidAudience = "MVC"
                   };
                   options.RequireHttpsMetadata = false;
