@@ -65,7 +65,6 @@ namespace ClientMVC
 
                   options.Scope.Add("offline_access");
                   options.ClaimActions.MapJsonKey("role", "role", "role");
-                  options.ClaimActions.MapJsonKey("name", "name", "name");
                   options.Events = new OpenIdConnectEvents
                   {
                       
