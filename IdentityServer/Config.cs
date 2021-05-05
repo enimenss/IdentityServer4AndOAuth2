@@ -76,6 +76,7 @@ namespace IdentityServer
                     RedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signin-oidc" },
                     PostLogoutRedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signout-callback-oidc" },
                     AccessTokenLifetime = 86400,
+                   // AlwaysIncludeUserClaimsInIdToken = true, IdentityProvider call in Profile service
                     AllowedScopes =
                     {
                         "openid",
