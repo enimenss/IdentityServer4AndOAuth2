@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { environment } from 'projects/core-ui/src/environments/environment';
+import { environment } from 'projects/application/src/environments/environment';
 
 @Component({
   selector: 'app-home',
