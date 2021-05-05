@@ -31,14 +31,33 @@ namespace IdentityServer
             new ApiResource[]
             {
 
-                new ApiResource( "ResourceApi","MyApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } ),
-                new ApiResource( "ResourceCMSApi","MyCMSApi",new[] { JwtClaimTypes.Email,JwtClaimTypes.Name,JwtClaimTypes.Role } )
-            {
-            ApiSecrets = {
-                new Secret( "ResourceApiSecret".Sha256() )
-            }
-            }
+                new ApiResource
+                {
+                    Name = "ResourceApi",
+                    DisplayName = "Resource Api",
+                    Description = "Allow the application to access Resource Api on your behalf",
+                    Scopes = new List<string> {"resource.full.access"},
+                  //  ApiSecrets = new List<Secret> {new Secret("ResourceApiSecret".Sha256())}
+                },
+                 new ApiResource
+                {
+                    Name = "ResourceCMSApi",
+                    DisplayName = "Resource CMS Api",
+                    Description = "Allow the application to access Resource CMS Api on your behalf",
+                    Scopes = new List<string> {"resourceCMS.full.access"},
+                   // ApiSecrets = new List<Secret> {new Secret("ResourceCMSApiSecret".Sha256())}
+                },
+
             };
+
+        public IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new[]
+            {
+                new ApiScope(name: "resource.full.access", displayName: "Access Resource API Backend"),
+                new ApiScope(name: "resourceCMS.full.access", displayName: "Access Resource API Backend"),
+             };
+        }
 
         public  IEnumerable<Client> Clients =>
             new Client[]
@@ -61,6 +80,8 @@ namespace IdentityServer
                     {
                         "openid",
                         "profile",
+                        "resource.full.access",
+                        "resourceCMS.full.access"
                         //"ResourceApi",
                         //"ResourceCMSApi"
                     },

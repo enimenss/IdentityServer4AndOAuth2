@@ -42,8 +42,7 @@ namespace ResourceApi
                options.Authority = Configuration.GetValue<string>("IdentityServerUrl"); ;//IdentityServer URL
                 options.RequireHttpsMetadata = false;       //False for local addresses, true ofcourse for live scenarios
                 options.ApiName = "ResourceApi";
-               options.ApiSecret = "ResourceApiSecret";
-              
+               // options.ApiSecret = "ResourceApiSecret";            
              
            });
 

@@ -69,6 +69,7 @@ namespace IdentityServer
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(config.Ids)
                 .AddInMemoryApiResources(config.Apis)
+                .AddInMemoryApiScopes(config.GetApiScopes())
                 .AddInMemoryClients(config.Clients)
                 .AddJwtBearerClientAuthentication()
                 .AddAspNetIdentity<AppUser>()

@@ -11,8 +11,8 @@ namespace ResourceApi.Controllers
 
     public class testt
     {
-        public string Email { get; set; }
-        public string Username { get; set; }
+       public string Email { get; set; }
+       public string Username { get; set; }
        public string Password { get; set; }
     }
     [ApiController]
@@ -38,8 +38,7 @@ namespace ResourceApi.Controllers
 
 
         [HttpGet]
-    
-      
+        [Authorize]
         public IEnumerable<WeatherForecast> Get(string Id)
         {
             Exception ex = new Exception("omg");

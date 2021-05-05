@@ -64,11 +64,11 @@ namespace ClientMVC.Controllers
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var apiResponse = await client.GetAsync("https://localhost:44386/weatherforecast");
 
-            var result = apiResponse.Content.ReadAsStringAsync();
+            var result = await apiResponse.Content.ReadAsStringAsync();
 
-            var apiResponse1 = await client.GetAsync("https://localhost:44373/account");
+            var apiResponse1 = await client.GetAsync("https://localhost:44373/weatherforecast");
 
-            var result1 = apiResponse1.Content.ReadAsStringAsync();
+            var result1 = await apiResponse1.Content.ReadAsStringAsync();
 
 
             return View();

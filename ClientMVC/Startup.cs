@@ -58,11 +58,8 @@ namespace ClientMVC
                       ValidAudience = "MVC"
                   };
                   options.RequireHttpsMetadata = false;
-                    //options.Scope.Add("openid");
-                    //options.Scope.Add("profile");
-                  //options.Scope.Add("ResourceApi");
-                  //options.Scope.Add("ResourceCMSApi");
-
+                  options.Scope.Add("resource.full.access");
+                  options.Scope.Add("resourceCMS.full.access");
                   options.Scope.Add("offline_access");
                   options.ClaimActions.MapJsonKey("role", "role", "role");
                   options.Events = new OpenIdConnectEvents
