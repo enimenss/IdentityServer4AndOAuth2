@@ -89,30 +89,33 @@ namespace IdentityServer
                     RequirePkce = false,
                     AllowOfflineAccess = true,
                 },
-                 
-                 new Client
-                {
-                    ClientId = "AngularCode",
-                    ClientName = "Angular Client",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedCorsOrigins = { "http://localhost:4200" },
-                    ClientSecrets =
-                    {
-                        new Secret("AngularSecret".Sha256())
-                    },
 
-                    RedirectUris ={ "http://localhost:4200/about","http://localhost:4200/silent-renew.html" },
-                    PostLogoutRedirectUris = { "http://localhost:4200/about","http://localhost:4200/silent-renew.html" },
-                    AccessTokenLifetime = 86400,
-                    AllowedScopes =
-                    {
-                        "openid",
-                        "profile",
-                        "ResourceApi"
-                    },
-                    AllowAccessTokensViaBrowser = true,
-                     RequireClientSecret = false,
-                      RequirePkce = true
+                new Client
+                {
+                ClientId = "AngularPKCE",
+                ClientName = "Angular Client",
+                AllowedGrantTypes = GrantTypes.Code,
+                AllowedCorsOrigins = {"http://localhost:4200"},
+
+                RedirectUris ={"http://localhost:4200","http://localhost:4200/silent-renew.html"},
+                PostLogoutRedirectUris = {"http://localhost:4200","http://localhost:4200/silent-renew.html"},
+                AccessTokenLifetime = 6000000,
+                AbsoluteRefreshTokenLifetime= 120000000,
+                IdentityTokenLifetime = 60000000,
+
+                AllowedScopes =
+                {
+                "openid",
+                "profile",
+                "resource.full.access",
+                "resourceCMS.full.access"
+                },
+                RequireClientSecret = false,
+                RequireConsent = false,
+                RequirePkce =true,
+                AllowOfflineAccess = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse
                 }
 
             };
