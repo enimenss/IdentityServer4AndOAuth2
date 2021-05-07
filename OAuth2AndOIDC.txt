@@ -11,7 +11,7 @@
  https://github.com/damienbod/angular-auth-oidc-client/blob/main/docs/public-api.md
  https://www.scottbrady91.com/Identity-Server/ASPNET-Core-Swagger-UI-Authorization-using-IdentityServer4
  https://stackoverflow.com/questions/36883970/return-json-with-lower-case-first-letter-of-property-names
- https://github.com/skoruba/IdentityServer4.Admin
+ https://github.com/skoruba/IdentityServer4.Admin 
  https://stackoverflow.com/questions/62615146/how-we-can-enable-sso-identity-server-4
  https://ux.stackexchange.com/questions/54973/native-vs-browser-based-sign-in-for-mobile-apps
  https://curity.io/resources/learn/oauth-for-mobile-apps-best-practices/
@@ -24,3 +24,6 @@
  https://leastprivilege.com/2017/11/15/missing-claims-in-the-asp-net-core-2-openid-connect-handler/
  https://leastprivilege.com/2016/12/14/optimizing-identity-tokens-for-size/
  https://github.com/damienbod/angular-auth-oidc-client/blob/main/docs/configuration.md
+ https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-5.0&fbclid=IwAR1IbJQZbqSerhYBEA6CrxmYlH-p7N1_7ne9WlGAswjxUxpQ0hpYyjTUTy0
+ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
+ https://www.ryadel.com/en/react-native-visual-studio-code-windows-hello-world-sample-app/
