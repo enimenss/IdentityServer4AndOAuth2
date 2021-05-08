@@ -67,6 +67,7 @@ namespace IdentityServer
                     ClientId = "MVC",
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedCorsOrigins = {Configuration.GetValue<string>("MVCUrl")},
 
                     ClientSecrets =
                     {
@@ -96,10 +97,10 @@ namespace IdentityServer
                 ClientId = "AngularPKCE",
                 ClientName = "Angular Client",
                 AllowedGrantTypes = GrantTypes.Code,
-                AllowedCorsOrigins = {"http://localhost:4200"},
+                AllowedCorsOrigins = {"http://localhost:4200","https://diplomski-angular.azurewebsites.net"},
 
-                RedirectUris ={"http://localhost:4200","http://localhost:4200/silent-renew.html"},
-                PostLogoutRedirectUris = {"http://localhost:4200","http://localhost:4200/silent-renew.html"},
+                RedirectUris ={"http://localhost:4200","http://localhost:4200/silent-renew.html", "https://diplomski-angular.azurewebsites.net", "https://diplomski-angular.azurewebsites.net/silent-renew.html"},
+                PostLogoutRedirectUris = {"http://localhost:4200","http://localhost:4200/silent-renew.html", "https://diplomski-angular.azurewebsites.net", "https://diplomski-angular.azurewebsites.net/silent-renew.html" },
                 AccessTokenLifetime = 6000000,
                 AbsoluteRefreshTokenLifetime= 120000000,
                 IdentityTokenLifetime = 60000000,
@@ -110,6 +111,31 @@ namespace IdentityServer
                 "profile",
                 "resource.full.access",
                 "resourceCMS.full.access"
+                },
+                RequireClientSecret = false,
+                RequireConsent = false,
+                RequirePkce =true,
+                AllowOfflineAccess = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse
+                },
+
+                new Client
+                {
+                ClientId = "ReactNativePKCE",
+                ClientName = "React Native Client",
+                AllowedGrantTypes = GrantTypes.Code,
+
+                RedirectUris ={"com.clientreactnative:/oauthredirect"},
+                PostLogoutRedirectUris = {"com.clientreactnative:/oauthredirect" },
+                AccessTokenLifetime = 6000000,
+                AbsoluteRefreshTokenLifetime= 120000000,
+                IdentityTokenLifetime = 60000000,
+
+                AllowedScopes =
+                {
+                "openid",
+                "profile"
                 },
                 RequireClientSecret = false,
                 RequireConsent = false,

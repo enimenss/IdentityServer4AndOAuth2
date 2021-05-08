@@ -27,3 +27,5 @@
  https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-5.0&fbclid=IwAR1IbJQZbqSerhYBEA6CrxmYlH-p7N1_7ne9WlGAswjxUxpQ0hpYyjTUTy0
  https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
  https://www.ryadel.com/en/react-native-visual-studio-code-windows-hello-world-sample-app/
+ https://github.com/FormidableLabs/react-native-app-auth
+ https://fusionauth.io/blog/2020/08/19/securing-react-native-with-oauth/

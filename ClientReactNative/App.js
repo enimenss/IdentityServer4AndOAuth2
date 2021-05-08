@@ -1,112 +1,162 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
+import {UIManager, Alert} from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
+  authorize,
+  refresh,
+  revoke,
+  prefetchConfiguration,
+} from 'react-native-app-auth';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  Page,
+  Button,
+  ButtonContainer,
+  Form,
+  FormLabel,
+  FormValue,
+  Heading,
+} from './components';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const configs = {
+  identityserver: {
+    issuer: 'https://diplomski-identity.azurewebsites.net',
+    clientId: 'ReactNativePKCE',
+    redirectUrl: 'com.clientreactnative:/oauthredirect',
+    additionalParameters: {},
+    scopes: ['openid', 'profile', 'offline_access'],
+
+    // serviceConfiguration: {
+    //   authorizationEndpoint: 'https://demo.identityserver.io/connect/authorize',
+    //   tokenEndpoint: 'https://demo.identityserver.io/connect/token',
+    //   revocationEndpoint: 'https://demo.identityserver.io/connect/revoke'
+    // }
+  },
+  auth0: {
+    // From https://openidconnect.net/
+    issuer: 'https://samples.auth0.com',
+    clientId: 'kbyuFDidLLm280LIwVFiazOqjO3ty8KH',
+    redirectUrl: 'https://openidconnect.net/callback',
+    additionalParameters: {},
+    scopes: ['openid', 'profile', 'email', 'phone', 'address'],
+
+    // serviceConfiguration: {
+    //   authorizationEndpoint: 'https://samples.auth0.com/authorize',
+    //   tokenEndpoint: 'https://samples.auth0.com/oauth/token',
+    //   revocationEndpoint: 'https://samples.auth0.com/oauth/revoke'
+    // }
+  },
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change thix
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+const defaultAuthState = {
+  hasLoggedInOnce: false,
+  provider: '',
+  accessToken: '',
+  accessTokenExpirationDate: '',
+  refreshToken: '',
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+const App = () => {
+  const [authState, setAuthState] = useState(defaultAuthState);
+  // React.useEffect(() => {
+  //   prefetchConfiguration({
+  //     warmAndPrefetchChrome: true,
+  //     ...configs.identityserver,
+  //   });
+  // }, []);
+
+  const handleAuthorize = useCallback(async provider => {
+    try {
+      const config = configs[provider];
+      const newAuthState = await authorize(config);
+
+      setAuthState({
+        hasLoggedInOnce: true,
+        provider: provider,
+        ...newAuthState,
+      });
+    } catch (error) {
+      Alert.alert('Failed to log in', error.message);
+    }
+  }, []);
+
+  const handleRefresh = useCallback(async () => {
+    try {
+      const config = configs[authState.provider];
+      const newAuthState = await refresh(config, {
+        refreshToken: authState.refreshToken,
+      });
+
+      setAuthState(current => ({
+        ...current,
+        ...newAuthState,
+        refreshToken: newAuthState.refreshToken || current.refreshToken,
+      }));
+    } catch (error) {
+      Alert.alert('Failed to refresh token', error.message);
+    }
+  }, [authState]);
+
+  const handleRevoke = useCallback(async () => {
+    try {
+      const config = configs[authState.provider];
+      await revoke(config, {
+        tokenToRevoke: authState.accessToken,
+        sendClientId: true,
+      });
+
+      setAuthState({
+        provider: '',
+        accessToken: '',
+        accessTokenExpirationDate: '',
+        refreshToken: '',
+      });
+    } catch (error) {
+      Alert.alert('Failed to revoke token', error.message);
+    }
+  }, [authState]);
+
+  const showRevoke = useMemo(() => {
+    if (authState.accessToken) {
+      const config = configs[authState.provider];
+      if (config.issuer || config.serviceConfiguration.revocationEndpoint) {
+        return true;
+      }
+    }
+    return false;
+  }, [authState]);
+
+  return (
+    <Page>
+      {authState.accessToken ? (
+        <Form>
+          <FormLabel>accessToken</FormLabel>
+          <FormValue>{authState.accessToken}</FormValue>
+          <FormLabel>accessTokenExpirationDate</FormLabel>
+          <FormValue>{authState.accessTokenExpirationDate}</FormValue>
+          <FormLabel>refreshToken</FormLabel>
+          <FormValue>{authState.refreshToken}</FormValue>
+          <FormLabel>scopes</FormLabel>
+          <FormValue>{authState.scopes.join(', ')}</FormValue>
+        </Form>
+      ) : (
+        <Heading>
+          {authState.hasLoggedInOnce ? 'Goodbye.' : 'Hello, stranger.'}
+        </Heading>
+      )}
+
+      <ButtonContainer>
+        <Button
+          onPress={() => handleAuthorize('identityserver')}
+          text="Authorize IdentityServer"
+          color="#DA2536"
+        />
+        <Button
+          onPress={() => handleAuthorize('auth0')}
+          text="Authorize Auth0"
+          color="#DA2536"
+        />
+      </ButtonContainer>
+    </Page>
+  );
+};
 
 export default App;

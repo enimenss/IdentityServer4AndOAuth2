@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  authorityUrl: 'https://diplomski-identity.azurewebsites.net'
 };

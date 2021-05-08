@@ -6,6 +6,7 @@
     <OutputType>Exe</OutputType>
     <StartupObject />
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <UserSecretsId>f76e38ef-493c-405e-a461-8d72de63b131</UserSecretsId>
   </PropertyGroup>
   
   <ItemGroup>
