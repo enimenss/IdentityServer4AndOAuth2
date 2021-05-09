@@ -27,9 +27,9 @@ export class AuthGuard implements CanActivate {
         // This check combination of session state in storage and idsrv.session cookie 
         this.oidcSecurityService.checkSessionChanged$.subscribe((isChanged) => {
           if (isChanged){
-            setTimeout( () => {
+            // setTimeout( () => {
             this.oidcSecurityService.authorize();
-            }, 3000);
+            // }, 3000);
           }
         });
 

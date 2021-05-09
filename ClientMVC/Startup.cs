@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace ClientMVC
 {
@@ -79,7 +80,21 @@ namespace ClientMVC
                 };
               });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Path = "/; SameSite=None";
+                options.Cookie.SameSite = SameSiteMode.None;
+               
+            });
 
+            services.Configure<CookiePolicyOptions>(o =>
+            {
+                o.OnAppendCookie = c =>
+                {
+                        c.CookieOptions.SameSite = SameSiteMode.None;
+                        c.CookieOptions.Secure = true;
+                };
+            });
             services
                 .AddMvc(options =>
                  {

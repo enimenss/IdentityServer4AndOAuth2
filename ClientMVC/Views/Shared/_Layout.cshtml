@@ -17,7 +17,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                   @User.Identity.Name
+                    @User.Identity.Name
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -55,8 +55,25 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.cookie.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+
+            setInterval(function () {
+                 $.ajax({
+            type: 'POST',
+            url: '/Home/CheckState',
+            success: function(ajaxReturnedData){
+                     },
+                     error: function (ajaxErrorData) {
+                         location.reload();
+                     }
+            });
+            }, 3000);
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -12,9 +12,11 @@ using Microsoft.AspNetCore.Authentication;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ClientMVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -31,7 +33,14 @@ namespace ClientMVC.Controllers
             return View();
         }
 
-        public IActionResult Login(string code)
+        [HttpPost]
+        public IActionResult CheckState()
+        {
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Login()
         {
             return Challenge(new Microsoft.AspNetCore.Authentication.AuthenticationProperties
             {
@@ -40,6 +49,27 @@ namespace ClientMVC.Controllers
             }, "OpenIdConnect");
 
             //return Redirect("https://localhost:44323/connect/authorize?client_id=Test&response_type=code&redirect_uri=http://localhost:5012/Home/Login&scope=openid profile custom.profile ResourceApi ResourceCMSApi");
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> LocalLogout(string sid)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentSid = User.FindFirst("sid")?.Value ?? "";
+                if (string.Equals(currentSid, sid, StringComparison.Ordinal))
+                {
+                    //Maybe SignalR to notify clients
+                    //await HttpContext.SignOutAsync();
+                    await HttpContext.SignOutAsync("Cookies");
+                    SignOut("Cookies", "OpenIdConnect");
+                    return RedirectToAction("Login");
+                }
+            }
+
+            return RedirectToAction("Login");
         }
 
 
@@ -88,7 +118,7 @@ namespace ClientMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
+        [AllowAnonymous]
         public IActionResult Logout()
         {
             return SignOut("Cookies","OpenIdConnect");

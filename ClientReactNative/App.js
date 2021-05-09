@@ -150,7 +150,7 @@ const App = () => {
           color="#DA2536"
         />
         <Button
-          onPress={() => handleAuthorize('auth0')}
+          onPress={() => handleRevoke()}
           text="Authorize Auth0"
           color="#DA2536"
         />

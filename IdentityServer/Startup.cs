@@ -63,7 +63,7 @@ namespace IdentityServer
                               options.Events.RaiseFailureEvents = true;
                               options.Events.RaiseInformationEvents = true;
                               options.Events.RaiseSuccessEvents = true;
-                           //   options.Authentication.CheckSessionCookieSameSiteMode = SameSiteMode.Lax; // for idsrv.session cookie to run over http
+                              options.Authentication.CheckSessionCookieSameSiteMode = SameSiteMode.None; // for idsrv.session cookie to run over http
                           }
                 )
                 .AddDeveloperSigningCredential()
@@ -80,10 +80,10 @@ namespace IdentityServer
                // not recommended for production - you need to store your key material somewhere secure
                builder.AddDeveloperSigningCredential();
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.SameSite = SameSiteMode.Lax;
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
 
 
         }

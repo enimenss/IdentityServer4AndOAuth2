@@ -90,6 +90,10 @@ namespace IdentityServer
                     RequireClientSecret = true,
                     RequirePkce = false,
                     AllowOfflineAccess = true,
+                    FrontChannelLogoutSessionRequired = true,
+                    FrontChannelLogoutUri = Configuration.GetValue<string>("MVCUrl")+"/home/LocalLogout",
+                   // BackChannelLogoutUri = Configuration.GetValue<string>("MVCUrl")+"/home/LocalLogout"
+
                 },
 
                 new Client
@@ -128,6 +132,31 @@ namespace IdentityServer
 
                 RedirectUris ={"com.clientreactnative:/oauthredirect"},
                 PostLogoutRedirectUris = {"com.clientreactnative:/oauthredirect" },
+                AccessTokenLifetime = 6000000,
+                AbsoluteRefreshTokenLifetime= 120000000,
+                IdentityTokenLifetime = 60000000,
+
+                AllowedScopes =
+                {
+                "openid",
+                "profile"
+                },
+                RequireClientSecret = false,
+                RequireConsent = false,
+                RequirePkce =true,
+                AllowOfflineAccess = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse
+                },
+
+                  new Client
+                {
+                ClientId = "Xamarin",
+                ClientName = "Xamarin Client",
+                AllowedGrantTypes = GrantTypes.Code,
+
+                RedirectUris ={"xamarinformsclients://callback"},
+                PostLogoutRedirectUris = {"xamarinformsclients://callback" },
                 AccessTokenLifetime = 6000000,
                 AbsoluteRefreshTokenLifetime= 120000000,
                 IdentityTokenLifetime = 60000000,

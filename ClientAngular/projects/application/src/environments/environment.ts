@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  authorityUrl: 'https://localhost:44323'
+  authorityUrl: 'https://localhost:44333'
 };
 
 /*
