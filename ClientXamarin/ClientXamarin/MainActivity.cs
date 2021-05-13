@@ -52,8 +52,7 @@ namespace ClientXamarin
                 Scope = "openid profile offline_access",
                 RedirectUri = "xamarinformsclients://callback",
                 PostLogoutRedirectUri = "xamarinformsclients://callback",
-                Browser = browser,
-
+                Browser = browser,  
                 ResponseMode = OidcClientOptions.AuthorizeResponseMode.Redirect
             };
 

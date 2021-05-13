@@ -160,6 +160,8 @@ namespace IdentityServer
                 AccessTokenLifetime = 6000000,
                 AbsoluteRefreshTokenLifetime= 120000000,
                 IdentityTokenLifetime = 60000000,
+                BackChannelLogoutSessionRequired = true,
+                BackChannelLogoutUri = "xamarinformsclients://callback",
 
                 AllowedScopes =
                 {

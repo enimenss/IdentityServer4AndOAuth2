@@ -35,3 +35,16 @@
  https://piraveenaparalogarajah.medium.com/openid-connect-back-channel-logout-1-0-fe1f90c83fe5
  https://github.com/IdentityModel/IdentityModel.OidcClient
  https://github.com/IdentityModel/IdentityModel.OidcClient.Samples/tree/main/XamarinForms
+ https://www.pingidentity.com/content/dam/pic/downloads/resources/white-papers/en/distributed-session-management-3033.pdf
+ https://curity.io/resources/learn/sso-for-mobile-with-openid-connect/
+ https://www.kevel.co/blog/chrome-samesite/
+ https://mrochon.azurewebsites.net/2016/08/04/single-signon-is-easy-single-signout-is-not/
+ 
+ https://searchsecurity.techtarget.com/definition/single-sign-on
+ https://blog.capterra.com/single-sign-on/
+ https://www.ionos.com/digitalguide/server/tools/single-sign-on/
+ 
+ https://www.okta.com/identity-101/whats-the-difference-between-oauth-openid-connect-and-saml/
+ https://blog.vidizmo.com/authentication-protocols-openid-connect-vs.-saml
+ 
+ 

@@ -44,6 +44,7 @@ namespace ClientXamarin
             callback = url =>
             {
                 OidcCallbackActivity.Callbacks -= callback;
+                OidcCallbackActivityBC.Callbacks -= callback;
 
                 task.SetResult(new BrowserResult()
                 {
@@ -52,6 +53,7 @@ namespace ClientXamarin
             };
 
             OidcCallbackActivity.Callbacks += callback;
+            OidcCallbackActivityBC.Callbacks += callback;
 
             customTabsIntent.LaunchUrl(_context, Android.Net.Uri.Parse(options.StartUrl));
 
