@@ -52,3 +52,4 @@
  https://www.ibm.com/docs/en/sva/9.0.3.1?topic=SSPREK_9.0.3.1/com.ibm.isam.doc/config/concept/con_oauth_20_concepts.html
  
  https://developers.onelogin.com/openid-connect
+ https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa
