@@ -53,3 +53,10 @@
  
  https://developers.onelogin.com/openid-connect
  https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa
+ 
+ https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-3-b81c5aa9bc20
+ https://oauth.net/2/grant-types/implicit/
+ 
+ https://auth0.com/docs/flows/hybrid-flow
+ https://curity.io/resources/learn/hybrid-flow/
+ 
