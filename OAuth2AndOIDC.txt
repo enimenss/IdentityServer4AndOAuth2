@@ -59,4 +59,12 @@
  
  https://auth0.com/docs/flows/hybrid-flow
  https://curity.io/resources/learn/hybrid-flow/
+ code_challenge_method
+ 
+ PCBxoCJMdDloUVl1ctjvA6VNbY6fTg1P7PNhymbydM
+ https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation 
+ https://developers.onelogin.com/openid-connect/guides/auth-flow-pkce
+ https://auth0.com/docs/flows/authorization-code-flow-with-proof-key-for-code-exchange-pkce
+ https://developer.okta.com/docs/guides/implement-auth-code-pkce/use-flow/
+ 
  
