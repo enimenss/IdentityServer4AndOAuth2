@@ -19,13 +19,74 @@ namespace IdentityServer.ExtensionGrant
 		}
 		public async Task GetProfileDataAsync(ProfileDataRequestContext context)
 		{
-			//List<string> roles = _userManager.GetRoles(userId).ToList();
-			context.IssuedClaims.AddRange(context.Subject.Claims);
+            if (context.Caller.Equals("ClaimsProviderIdentityToken"))
+            {
+				//Add claims to identity token
+				if(context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "openid"))
+                {
+					var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
+					context.IssuedClaims.Add(subClaim);
+                }
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "email"))
+				{
+					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
+					context.IssuedClaims.Add(emailClaim);
+				}
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "profile"))
+				{
+					var profileClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "name");
+					context.IssuedClaims.Add(profileClaim);
+
+				}
+
+                if (context.Client.ClientId.Equals("MVC"))
+                {
+					//Add client specific claims;
+                };
+
+			}
+
+			if (context.Caller.Equals("UserInfoEndpoint"))
+			{
+				var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
+				if(subClaim != null)
+                {
+					var user = await _userManager.FindByIdAsync(subClaim.Value);
+					if(user != null)
+                    {
+						var claims = await _userManager.GetClaimsAsync(user);
+						context.IssuedClaims.AddRange(claims);
+                    }
+                }
+				//return user info claims
+			}
+
+			if (context.Caller.Equals("ClaimsProviderAccessToken"))
+			{
+				context.IssuedClaims.AddRange(context.Subject.Claims);
+				//Add claims to access token
+			}
+
+
 
 		}
 
 		public async Task IsActiveAsync(IsActiveContext context)
 		{
+			var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
+			if (subClaim == null)
+			{
+				context.IsActive = false;
+				return;
+			}
+			var user = await _userManager.FindByIdAsync(subClaim.Value);
+
+			if (user == null)
+			{
+				context.IsActive = false;
+				return;
+			}
+			
 			context.IsActive =true;
 			
 		}

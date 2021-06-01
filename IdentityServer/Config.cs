@@ -24,7 +24,8 @@ namespace IdentityServer
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email()
             };
 
         public  IEnumerable<ApiResource> Apis =>
@@ -77,15 +78,12 @@ namespace IdentityServer
                     RedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signin-oidc" },
                     PostLogoutRedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signout-callback-oidc" },
                     AccessTokenLifetime = 86400,
-                   // AlwaysIncludeUserClaimsInIdToken = true, IdentityProvider call in Profile service
+                    AlwaysIncludeUserClaimsInIdToken = true, /*IdentityProvider call in Profile service*/
                     AllowedScopes =
                     {
                         "openid",
                         "profile",
-                        "resource.full.access",
-                        "resourceCMS.full.access"
-                        //"ResourceApi",
-                        //"ResourceCMSApi"
+                        "email",
                     },
                     RequireClientSecret = true,
                     RequirePkce = false,
@@ -103,11 +101,11 @@ namespace IdentityServer
                 AllowedGrantTypes = GrantTypes.Code,
                 AllowedCorsOrigins = {"http://localhost:4200","https://diplomski-angular.azurewebsites.net"},
 
-                RedirectUris ={"http://localhost:4200","http://localhost:4200/silent-renew.html", "https://diplomski-angular.azurewebsites.net", "https://diplomski-angular.azurewebsites.net/silent-renew.html"},
-                PostLogoutRedirectUris = {"http://localhost:4200","http://localhost:4200/silent-renew.html", "https://diplomski-angular.azurewebsites.net", "https://diplomski-angular.azurewebsites.net/silent-renew.html" },
-                AccessTokenLifetime = 6000000,
+                RedirectUris ={"http://localhost:4200", "https://diplomski-angular.azurewebsites.net"},
+                PostLogoutRedirectUris = {"http://localhost:4200", "https://diplomski-angular.azurewebsites.net" },
+                AccessTokenLifetime = 60,
                 AbsoluteRefreshTokenLifetime= 120000000,
-                IdentityTokenLifetime = 60000000,
+                IdentityTokenLifetime = 60,
 
                 AllowedScopes =
                 {

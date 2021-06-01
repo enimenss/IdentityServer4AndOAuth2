@@ -73,3 +73,9 @@
  https://ashend.medium.com/openid-connect-session-management-d0c8e7dc252b
  https://ashend.medium.com/openid-connect-backchannel-logout-144a3198d2a
  
+ ClaimsProviderAccessToken
+ UserInfoEndpoint
+ ClaimsProviderIdentityToken
+ 
+ 
+ https://www.red-gate.com/simple-talk/development/dotnet-development/working-with-identity-server-4/

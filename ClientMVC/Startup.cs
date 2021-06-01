@@ -54,15 +54,15 @@ namespace ClientMVC
                  options.ResponseType ="code id_token";
                  options.SaveTokens = true;
                  options.GetClaimsFromUserInfoEndpoint = true;
-                  options.TokenValidationParameters = new TokenValidationParameters
+                 options.TokenValidationParameters = new TokenValidationParameters
                   {
                       NameClaimType = "email",
                       ValidAudience = "MVC"
                   };
                   options.RequireHttpsMetadata = false;
-                  options.Scope.Add("resource.full.access");
-                  options.Scope.Add("resourceCMS.full.access");
                   options.Scope.Add("offline_access");
+                 // options.Scope.Remove("profile");
+                  options.Scope.Add("email");
                   options.ClaimActions.MapJsonKey("role", "role", "role");
                   options.Events = new OpenIdConnectEvents
                   {
