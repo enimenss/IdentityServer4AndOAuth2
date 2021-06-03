@@ -63,7 +63,6 @@ namespace IdentityServer
                               options.Events.RaiseFailureEvents = true;
                               options.Events.RaiseInformationEvents = true;
                               options.Events.RaiseSuccessEvents = true;
-                              options.Authentication.CheckSessionCookieSameSiteMode = SameSiteMode.None; // for idsrv.session cookie to run over http
                           }
                 )
                 .AddDeveloperSigningCredential()

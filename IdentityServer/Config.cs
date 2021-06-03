@@ -19,13 +19,17 @@ namespace IdentityServer
 
         }
 
-
         public IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email()
+                new IdentityResources.Email(),
+
+                new IdentityResource(
+                    name: "custom.profile",
+                    userClaims: new[] { "sub", "email", "username" },
+                    displayName: "Your user identifier")
             };
 
         public  IEnumerable<ApiResource> Apis =>
@@ -65,61 +69,45 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "MVC",
-                    ClientName = "MVC Client",
+                    ClientId = "ClientMVC",
+                    ClientName = "Client MVC",
                     AllowedGrantTypes = GrantTypes.Hybrid,
-                    AllowedCorsOrigins = {Configuration.GetValue<string>("MVCUrl")},
-
+                    AllowedCorsOrigins = {"https://localhost:44344"},
                     ClientSecrets =
                     {
                         new Secret("MVCSecret".Sha256())
                     },
-
-                    RedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signin-oidc" },
-                    PostLogoutRedirectUris = { Configuration.GetValue<string>("MVCUrl")+"/signout-callback-oidc" },
-                    AccessTokenLifetime = 86400,
-                    AlwaysIncludeUserClaimsInIdToken = true, /*IdentityProvider call in Profile service*/
+                    RedirectUris = { "https://localhost:44344/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:44344/signout-callback-oidc" },
+                    IdentityTokenLifetime = 1200,
                     AllowedScopes =
                     {
                         "openid",
-                        "profile",
-                        "email",
+                        "custom.profile"
                     },
                     RequireClientSecret = true,
-                    RequirePkce = false,
                     AllowOfflineAccess = true,
-                    FrontChannelLogoutSessionRequired = true,
-                    FrontChannelLogoutUri = Configuration.GetValue<string>("MVCUrl")+"/home/LocalLogout",
-                   // BackChannelLogoutUri = Configuration.GetValue<string>("MVCUrl")+"/home/LocalLogout"
-
+                    RequirePkce = false,
                 },
+
 
                 new Client
                 {
-                ClientId = "AngularPKCE",
-                ClientName = "Angular Client",
-                AllowedGrantTypes = GrantTypes.Code,
-                AllowedCorsOrigins = {"http://localhost:4200","https://diplomski-angular.azurewebsites.net"},
-
-                RedirectUris ={"http://localhost:4200", "https://diplomski-angular.azurewebsites.net"},
-                PostLogoutRedirectUris = {"http://localhost:4200", "https://diplomski-angular.azurewebsites.net" },
-                AccessTokenLifetime = 60,
-                AbsoluteRefreshTokenLifetime= 120000000,
-                IdentityTokenLifetime = 60,
-
-                AllowedScopes =
-                {
-                "openid",
-                "profile",
-                "resource.full.access",
-                "resourceCMS.full.access"
-                },
-                RequireClientSecret = false,
-                RequireConsent = false,
-                RequirePkce =true,
-                AllowOfflineAccess = true,
-                UpdateAccessTokenClaimsOnRefresh = true,
-                RefreshTokenUsage = TokenUsage.ReUse
+                    ClientId = "ClientAngular",
+                    ClientName = "Angular Angular",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    RedirectUris ={"http://localhost:4200"},
+                    PostLogoutRedirectUris = {"http://localhost:4200"},
+                    IdentityTokenLifetime = 1200,
+                    AllowedScopes =
+                    {
+                    "openid",
+                    "email"
+                    },
+                    RequireClientSecret = false,
+                    AllowOfflineAccess = true,
+                    RequirePkce = true,
                 },
 
                 new Client
