@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer.AccountViewModels
+namespace IdentityServer.AuthenticationViewModels
 {
-    public class LoginViewModel
+    public class SignInViewModel
     {
         [Required]
         [EmailAddress]

@@ -49,7 +49,7 @@ namespace ClientMVC
 
                  options.SignInScheme = "Cookies";
                  options.Authority = Configuration.GetValue<string>("IdentityServerUrl");
-                 options.ClientId = "MVC";
+                 options.ClientId = "ClientMVC";
                  options.ClientSecret = "MVCSecret";
                  options.ResponseType ="code id_token";
                  options.SaveTokens = true;
@@ -57,27 +57,13 @@ namespace ClientMVC
                  options.TokenValidationParameters = new TokenValidationParameters
                   {
                       NameClaimType = "email",
-                      ValidAudience = "MVC"
+                      ValidAudience = "ClientMVC"
                   };
                   options.RequireHttpsMetadata = false;
+                  options.Scope.Clear();
+                  options.Scope.Add("openid");
+                  options.Scope.Add("custom.profile");
                   options.Scope.Add("offline_access");
-                 // options.Scope.Remove("profile");
-                  options.Scope.Add("email");
-                  options.ClaimActions.MapJsonKey("role", "role", "role");
-                  options.Events = new OpenIdConnectEvents
-                  {
-                      
-                    OnUserInformationReceived = context =>
-                      {            
-                        return Task.FromResult(0);
-                      },
-                      OnRedirectToIdentityProvider = n => //for later experiments
-                      {
-
-                         // n.ProtocolMessage.SetParameter("external_provider", "Facebook");
-                          return Task.FromResult(0);
-                      }
-                };
               });
 
             services.ConfigureApplicationCookie(options =>

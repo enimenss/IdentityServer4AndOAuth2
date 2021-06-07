@@ -1,13 +1,8 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Authentication
-@model IdentityServer.AccountViewModels.LoginViewModel
-@inject SignInManager<IdentityServer.IdentityModels.AppUser> SignInManager
+﻿
+@model IdentityServer.AuthenticationViewModels.SignInViewModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Sign In";
 }
 
     <div class="row" style="margin:auto;margin-top:5%;text-align:center">
@@ -15,7 +10,7 @@
         <div class="col-md-4">
             <section>
                 <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                    <h4>Use a local account to log in.</h4>
+                    <h4>Use a local account to sign in.</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">

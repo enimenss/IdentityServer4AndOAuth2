@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
-using IdentityServer.AccountViewModels;
 using IdentityServer4.Services;
 using IdentityServer.Models;
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Events;
+using IdentityServer.AuthenticationViewModels;
 
 namespace IdentityServer.Controllers
 {
 
-    public class AccountController : Controller
+    public class AuthenticationController : Controller
     {
         private UserManager<AppUser> _userManager { get; }
         private SignInManager<AppUser> _signInManager { get; }
@@ -25,7 +25,7 @@ namespace IdentityServer.Controllers
         private readonly IEventService _events;
 
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IIdentityServerInteractionService interaction, IEventService events)
+        public AuthenticationController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IIdentityServerInteractionService interaction, IEventService events)
          {
 
             _userManager = userManager;
@@ -37,7 +37,7 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> SignIn(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);        
@@ -49,15 +49,16 @@ namespace IdentityServer.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToLocal(returnUrl);
+                    return Redirect(returnUrl);
                 }
  
             }
