@@ -17,32 +17,24 @@ namespace IdentityServer.Controllers
 
     public class AuthenticationController : Controller
     {
-        private UserManager<AppUser> _userManager { get; }
-        private SignInManager<AppUser> _signInManager { get; }
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IIdentityServerInteractionService _interaction;
 
-        private IIdentityServerInteractionService _interaction;
-
-        private readonly IEventService _events;
-
-
-        public AuthenticationController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IIdentityServerInteractionService interaction, IEventService events)
+        public AuthenticationController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, IIdentityServerInteractionService interaction)
          {
 
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
-            _events = events;
          }
-
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(string returnUrl = null)
+        public IActionResult SignIn(string returnUrl = null)
         {
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);        
-
             ViewData["ReturnUrl"] = returnUrl;
+
             return View();
         }
 
@@ -60,7 +52,6 @@ namespace IdentityServer.Controllers
                 {
                     return Redirect(returnUrl);
                 }
- 
             }
 
             return View(model);
