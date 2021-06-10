@@ -23,19 +23,10 @@ namespace IdentityServer
             Environment = environment;
         }
 
-
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // uncomment, if you want to add an MVC-based UI
-            //services.AddControllersWithViews();
-
-
-            services.Configure<DataProtectionTokenProviderOptions>(options =>
-            {
-                options.TokenLifespan = TimeSpan.FromMinutes(5);
-            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -48,40 +39,28 @@ namespace IdentityServer
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-              //  .AddDefaultUI();
-
-            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
-
-            services.AddAuthentication();
-
-            var config = new Config(Configuration);
 
             var builder = services.AddIdentityServer(
                           options =>
                           {
                               options.UserInteraction.LoginUrl = "/authentication/signIn";
+                              options.UserInteraction.LogoutUrl = "/authentication/logout";
                           }
                 )
                 .AddDeveloperSigningCredential()
-                .AddInMemoryIdentityResources(config.Ids)
-                .AddInMemoryApiResources(config.Apis)
-                .AddInMemoryApiScopes(config.GetApiScopes())
-                .AddInMemoryClients(config.Clients)
+                .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryClients(Config.Clients)
                 .AddJwtBearerClientAuthentication()
                 .AddAspNetIdentity<AppUser>()
                 .AddProfileService<ProfileService<AppUser>>();
 
 
-
                // not recommended for production - you need to store your key material somewhere secure
                builder.AddDeveloperSigningCredential();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.SameSite = SameSiteMode.None;
-            });
 
-
+            services.AddAuthentication();
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
         public void Configure(IApplicationBuilder app)

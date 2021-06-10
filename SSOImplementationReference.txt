@@ -1,1 +1,13 @@
  https://github.com/IdentityServer/IdentityServer4
+
+ 
+ Reference
+[1] github.com/IdentityServer/IdentityServer4 2021. Available at:
+https://github.com/IdentityServer/IdentityServer4 
+[2] docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 2020. Available at:
+https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 
+[Accessed 05/13/2020 ]
+[3] docs.identityserver.io/en/latest/index.html 2020. Available at:
+ https://docs.identityserver.io/en/latest/index.html
+[4] identityserver4.readthedocs.io/en/latest/topics/discovery.html 2020. Available at:
+https://identityserver4.readthedocs.io/en/latest/topics/discovery.html

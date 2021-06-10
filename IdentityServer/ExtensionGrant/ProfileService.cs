@@ -32,17 +32,18 @@ namespace IdentityServer.ExtensionGrant
 					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
 					context.IssuedClaims.Add(emailClaim);
 				}
-				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "profile"))
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "custom.profile"))
 				{
-					var profileClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "name");
-					context.IssuedClaims.Add(profileClaim);
-
+					var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
+					var usernameClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "username");
+					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
+					context.IssuedClaims.Add(subClaim);
+					if (usernameClaim != null)
+					{
+						context.IssuedClaims.Add(usernameClaim);
+					}
+					context.IssuedClaims.Add(emailClaim);
 				}
-
-                if (context.Client.ClientId.Equals("MVC"))
-                {
-					//Add client specific claims;
-                };
 
 			}
 
@@ -87,8 +88,7 @@ namespace IdentityServer.ExtensionGrant
 				return;
 			}
 			
-			context.IsActive =true;
-			
+			context.IsActive =true;		
 		}
 	}
 }

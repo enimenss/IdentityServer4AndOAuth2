@@ -9,7 +9,6 @@ namespace IdentityServer
 {
     public class Config
     {
-
         public static IConfiguration Configuration { get; set; }
 
         public Config(IConfiguration configuration)
@@ -18,8 +17,7 @@ namespace IdentityServer
 
 
         }
-
-        public IEnumerable<IdentityResource> Ids =>
+        public static IEnumerable<IdentityResource> Ids =>
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
@@ -32,39 +30,7 @@ namespace IdentityServer
                     displayName: "Your user identifier")
             };
 
-        public  IEnumerable<ApiResource> Apis =>
-            new ApiResource[]
-            {
-
-                new ApiResource
-                {
-                    Name = "ResourceApi",
-                    DisplayName = "Resource Api",
-                    Description = "Allow the application to access Resource Api on your behalf",
-                    Scopes = new List<string> {"resource.full.access"},
-                  //  ApiSecrets = new List<Secret> {new Secret("ResourceApiSecret".Sha256())}
-                },
-                 new ApiResource
-                {
-                    Name = "ResourceCMSApi",
-                    DisplayName = "Resource CMS Api",
-                    Description = "Allow the application to access Resource CMS Api on your behalf",
-                    Scopes = new List<string> {"resourceCMS.full.access"},
-                   // ApiSecrets = new List<Secret> {new Secret("ResourceCMSApiSecret".Sha256())}
-                },
-
-            };
-
-        public IEnumerable<ApiScope> GetApiScopes()
-        {
-            return new[]
-            {
-                new ApiScope(name: "resource.full.access", displayName: "Access Resource API Backend"),
-                new ApiScope(name: "resourceCMS.full.access", displayName: "Access Resource API Backend"),
-             };
-        }
-
-        public  IEnumerable<Client> Clients =>
+        public static  IEnumerable<Client> Clients =>
             new Client[]
             {
                 new Client
@@ -80,6 +46,7 @@ namespace IdentityServer
                     RedirectUris = { "https://localhost:44344/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:44344/signout-callback-oidc" },
                     IdentityTokenLifetime = 1200,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     AllowedScopes =
                     {
                         "openid",
@@ -90,7 +57,6 @@ namespace IdentityServer
                     RequirePkce = false,
                 },
 
-
                 new Client
                 {
                     ClientId = "ClientAngular",
@@ -100,6 +66,7 @@ namespace IdentityServer
                     RedirectUris ={"http://localhost:4200"},
                     PostLogoutRedirectUris = {"http://localhost:4200"},
                     IdentityTokenLifetime = 1200,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     AllowedScopes =
                     {
                     "openid",
