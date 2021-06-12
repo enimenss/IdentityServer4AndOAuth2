@@ -59,11 +59,10 @@ namespace IdentityServer
 
                 new Client
                 {
+                    RedirectUris ={"http://localhost:4200"},
                     ClientId = "ClientAngular",
                     ClientName = "Angular Angular",
-                    AllowedGrantTypes = GrantTypes.Code,
                     AllowedCorsOrigins = {"http://localhost:4200"},
-                    RedirectUris ={"http://localhost:4200"},
                     PostLogoutRedirectUris = {"http://localhost:4200"},
                     IdentityTokenLifetime = 1200,
                     AlwaysIncludeUserClaimsInIdToken = true,
@@ -72,6 +71,7 @@ namespace IdentityServer
                     "openid",
                     "email"
                     },
+                    AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
                     AllowOfflineAccess = true,
                     RequirePkce = true,

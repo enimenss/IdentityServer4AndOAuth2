@@ -10,16 +10,27 @@ import { environment } from 'projects/application/src/environments/environment';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private oidcSecurityService: OidcSecurityService,private httpClient: HttpClient) { }
+  constructor(private oidcSecurityService: OidcSecurityService) { }
 
   ngOnInit(): void {
-    // this.httpClient.get(environment.coreApiUrl + '/api/home/index').subscribe();
   }
 
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  isAuth() {
+    this.oidcSecurityService.checkAuth().subscribe((auth) => console.log('is authenticated', auth));
+  }
+
+  getUserInfo(){
+     this.oidcSecurityService.userData$.subscribe((user) => {
+      console.log("User -->", user);
+    })
+  }
 
   signOut(){
    this.oidcSecurityService.logoffAndRevokeTokens().subscribe();
-   return false;
   }
 
 }

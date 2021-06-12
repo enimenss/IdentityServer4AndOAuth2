@@ -7,31 +7,25 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../environments/environment';
-import {  AuthModule, LogLevel,  OidcConfigService, OidcSecurityService } from 'angular-auth-oidc-client';
 import { ErrorService } from './shared/services/error.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerHttpInterceptor } from './shared/interceptors/server-http.interceptor';
 import { Router } from '@angular/router';
 
+import {  AuthModule, LogLevel,  OidcConfigService, OidcSecurityService } from 'angular-auth-oidc-client';
+
 export function configureAuth(oidcConfigService: OidcConfigService) {
   return () =>
       oidcConfigService.withConfig({
-        stsServer: environment.authorityUrl,
+        stsServer: 'https://localhost:44333',
         redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
-        clientId: 'AngularPKCE',
-        scope: 'openid profile resource.full.access resourceCMS.full.access offline_access',
+        clientId: 'ClientAngular',
+        scope: 'openid email',
         responseType: 'code',
-        useRefreshToken: true,
-        silentRenew: true,
-        silentRenewUrl: `${window.location.origin}/silent-renew.html`,
         logLevel: LogLevel.None,
-        startCheckSession: true,
         autoUserinfo: true,
-        storage: window.localStorage,
-        maxIdTokenIatOffsetAllowedInSeconds: 60*60*12, //12h (+/- from utc across the globe)
-        renewTimeBeforeTokenExpiresInSeconds: 60*2, //2 mins
-        tokenRefreshInSeconds:60*1 //1 mins
+        storage: window.localStorage,       
+        maxIdTokenIatOffsetAllowedInSeconds: 60*60*12,
       });
 }
 
