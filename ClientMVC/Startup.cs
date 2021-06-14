@@ -12,12 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ClientMVC.Models;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace ClientMVC
 {
@@ -28,8 +27,10 @@ namespace ClientMVC
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 

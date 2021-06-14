@@ -19,24 +19,9 @@ namespace ClientMVC.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpPost]
-        public IActionResult CheckState()
-        {
-            return Ok();
         }
 
         [AllowAnonymous]
@@ -48,8 +33,18 @@ namespace ClientMVC.Controllers
 
             }, "OpenIdConnect");
 
-            //return Redirect("https://localhost:44323/connect/authorize?client_id=Test&response_type=code&redirect_uri=http://localhost:5012/Home/Login&scope=openid profile custom.profile ResourceApi ResourceCMSApi");
         }
+
+        [Authorize]
+        public async Task<IActionResult> Privacy()
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var id_token = await HttpContext.GetTokenAsync("id_token");
+            var claims = HttpContext.User.Claims;
+
+            return View();
+        }
+
 
 
         [Authorize]
@@ -70,38 +65,6 @@ namespace ClientMVC.Controllers
             }
 
             return RedirectToAction("Login");
-        }
-
-
-        [Authorize]
-        public async Task<IActionResult> Privacy()
-        {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var refreshToken =await HttpContext.GetTokenAsync("refresh_token");
-            var id_token = await HttpContext.GetTokenAsync("id_token");
-
-            var user = User.Identity.Name;
-
-          //  var picture = User.Claims.Where(x=>x.);
-            var rola1 = User.IsInRole("Test");
-            var rola2 = User.IsInRole("Ok");
-            var rola3 = User.IsInRole("Restaurant");
-
-
-            var client = new HttpClient();
-
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var apiResponse = await client.GetAsync("https://localhost:44386/weatherforecast");
-
-            var result = await apiResponse.Content.ReadAsStringAsync();
-
-            var apiResponse1 = await client.GetAsync("https://localhost:44373/weatherforecast");
-
-            var result1 = await apiResponse1.Content.ReadAsStringAsync();
-
-
-            return View();
         }
 
 

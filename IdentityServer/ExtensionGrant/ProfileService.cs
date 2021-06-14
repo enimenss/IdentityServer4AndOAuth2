@@ -55,6 +55,7 @@ namespace IdentityServer.ExtensionGrant
 					var user = await _userManager.FindByIdAsync(subClaim.Value);
 					if(user != null)
                     {
+						context.IssuedClaims = context.Subject.Claims.ToList();
 						var claims = await _userManager.GetClaimsAsync(user);
 						context.IssuedClaims.AddRange(claims);
                     }
