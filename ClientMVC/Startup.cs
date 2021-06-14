@@ -12,11 +12,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ClientMVC.Models;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace ClientMVC
 {
@@ -26,17 +27,11 @@ namespace ClientMVC
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
             {
@@ -48,7 +43,7 @@ namespace ClientMVC
               {
 
                  options.SignInScheme = "Cookies";
-                 options.Authority = Configuration.GetValue<string>("IdentityServerUrl");
+                 options.Authority = "https://localhost:44333";
                  options.ClientId = "ClientMVC";
                  options.ClientSecret = "MVCSecret";
                  options.ResponseType ="code id_token";
@@ -56,31 +51,14 @@ namespace ClientMVC
                  options.GetClaimsFromUserInfoEndpoint = true;
                  options.TokenValidationParameters = new TokenValidationParameters
                   {
-                      NameClaimType = "email",
                       ValidAudience = "ClientMVC"
                   };
                   options.RequireHttpsMetadata = false;
                   options.Scope.Clear();
                   options.Scope.Add("openid");
                   options.Scope.Add("custom.profile");
-                  options.Scope.Add("offline_access");
               });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.Path = "/; SameSite=None";
-                options.Cookie.SameSite = SameSiteMode.None;
-               
-            });
-
-            services.Configure<CookiePolicyOptions>(o =>
-            {
-                o.OnAppendCookie = c =>
-                {
-                        c.CookieOptions.SameSite = SameSiteMode.None;
-                        c.CookieOptions.Secure = true;
-                };
-            });
             services
                 .AddMvc(options =>
                  {

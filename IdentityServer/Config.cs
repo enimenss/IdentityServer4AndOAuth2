@@ -37,12 +37,12 @@ namespace IdentityServer
                 {
                     ClientId = "ClientMVC",
                     ClientName = "Client MVC",
-                    AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedCorsOrigins = {"https://localhost:44344"},
                     ClientSecrets =
                     {
                         new Secret("MVCSecret".Sha256())
                     },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris = { "https://localhost:44344/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:44344/signout-callback-oidc" },
                     IdentityTokenLifetime = 1200,
