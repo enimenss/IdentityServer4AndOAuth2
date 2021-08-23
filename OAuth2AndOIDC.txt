@@ -40,16 +40,21 @@
  https://www.kevel.co/blog/chrome-samesite/
  https://mrochon.azurewebsites.net/2016/08/04/single-signon-is-easy-single-signout-is-not/
  
- https://searchsecurity.techtarget.com/definition/single-sign-on
- https://blog.capterra.com/single-sign-on/
- https://www.ionos.com/digitalguide/server/tools/single-sign-on/
+ https://auth0.com/blog/what-is-and-how-does-single-sign-on-work/ [1]
+ https://searchsecurity.techtarget.com/definition/single-sign-on [3]
+ https://www.ionos.com/digitalguide/server/tools/single-sign-on/ [2]
+ 
+ https://developer.okta.com/docs/concepts/oauth-openid/ [4]
  
  https://www.okta.com/identity-101/whats-the-difference-between-oauth-openid-connect-and-saml/
- https://blog.vidizmo.com/authentication-protocols-openid-connect-vs.-saml
- https://openid.net/connect/
+ https://blog.vidizmo.com/authentication-protocols-openid-connect-vs.-saml [5]
+ 
+ https://openid.net/connect/ [6]
+ https://www.ibm.com/docs/en/sva/9.0.7?topic=SSPREK_9.0.7/com.ibm.isam.doc/config/concept/con_oauth_20_concepts.html [7]
  https://auth0.com/docs/flows/authorization-code-flow-with-proof-key-for-code-exchange-pkce
- https://medium.com/@robert.broeckelmann/when-to-use-which-oauth2-grants-and-oidc-flows-ec6a5c00d864
- https://www.ibm.com/docs/en/sva/9.0.3.1?topic=SSPREK_9.0.3.1/com.ibm.isam.doc/config/concept/con_oauth_20_concepts.html
+ 
+ https://medium.com/@robert.broeckelmann/when-to-use-which-oauth2-grants-and-oidc-flows-ec6a5c00d864 [8]
+ https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa [9]
  
  https://developers.onelogin.com/openid-connect
  https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa

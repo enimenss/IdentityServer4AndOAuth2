@@ -2,12 +2,29 @@
 
  
  Reference
-[1] github.com/IdentityServer/IdentityServer4 2021. Available at:
-https://github.com/IdentityServer/IdentityServer4 
-[2] docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 2020. Available at:
-https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 
-[Accessed 05/13/2020 ]
-[3] docs.identityserver.io/en/latest/index.html 2020. Available at:
- https://docs.identityserver.io/en/latest/index.html
-[4] identityserver4.readthedocs.io/en/latest/topics/discovery.html 2020. Available at:
-https://identityserver4.readthedocs.io/en/latest/topics/discovery.html
+ 
+ 
+ 
+ 
+[1] https://auth0.com/blog/what-is-and-how-does-single-sign-on-work/
+[2] https://www.ionos.com/digitalguide/server/tools/single-sign-on/
+[3] https://searchsecurity.techtarget.com/definition/single-sign-on 
+[4] https://developer.okta.com/docs/concepts/oauth-openid/
+[5] https://blog.vidizmo.com/authentication-protocols-openid-connect-vs.-saml
+[6] https://openid.net/connect/
+[7] https://www.ibm.com/docs/en/sva/9.0.7?topic=SSPREK_9.0.7/com.ibm.isam.doc/config/concept/con_oauth_20_concepts.html
+[8] https://medium.com/@robert.broeckelmann/when-to-use-which-oauth2-grants-and-oidc-flows-ec6a5c00d864
+[9] https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa
+[10] https://curity.io/resources/learn/hybrid-flow/
+[11] https://auth0.com/docs/flows/authorization-code-flow-with-proof-key-for-code-exchange-pkce
+[12] https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
+[13] https://mrochon.azurewebsites.net/2016/08/04/single-signon-is-easy-single-signout-is-not/
+[14] https://ashend.medium.com/openid-connect-session-management-d0c8e7dc252b
+[15] https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+[16] https://ashend.medium.com/openid-connect-backchannel-logout-144a3198d2a 
+[17] https://github.com/IdentityServer/IdentityServer4 
+[18] https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 
+[19] https://docs.identityserver.io/en/latest/index.html
+[20] https://docs.identityserver.io/en/latest/topics/signin.html
+[21] https://www.npmjs.com/package/angular-auth-oidc-client
+[22] https://github.com/onelogin/openid-connect-dotnet-core-sample 
