@@ -6,25 +6,59 @@
  
  
  
-[1] https://auth0.com/blog/what-is-and-how-does-single-sign-on-work/
+    Sebastian Peyrott, Auth0 September 23. 2015 What is and how does single sign on work.  Available at:    
+[1] https://auth0.com/blog/what-is-and-how-does-single-sign-on-work/ [Accessed 12 June 2020].
+    Ionos Single Sign On
 [2] https://www.ionos.com/digitalguide/server/tools/single-sign-on/
+
+    Taina Teravainen Definiton of Single sign On
 [3] https://searchsecurity.techtarget.com/definition/single-sign-on 
+Okta Concepts of OAuth and OpenId
 [4] https://developer.okta.com/docs/concepts/oauth-openid/
+    
+	Vidizmo Authentication Protocols: OpenID Connect vs. SAML
 [5] https://blog.vidizmo.com/authentication-protocols-openid-connect-vs.-saml
+
+OpenId What is OpenID Connect. 
 [6] https://openid.net/connect/
+IBM Security OAuth 2.0 concepts
 [7] https://www.ibm.com/docs/en/sva/9.0.7?topic=SSPREK_9.0.7/com.ibm.isam.doc/config/concept/con_oauth_20_concepts.html
+    Robert Broeckelmann May 21, 2017 When To Use Which (OAuth2) Grants and (OIDC) Flows
 [8] https://medium.com/@robert.broeckelmann/when-to-use-which-oauth2-grants-and-oidc-flows-ec6a5c00d864
+
+     Robert Broeckelmann Mar 25, 2017 SAML2 vs JWT: Understanding OpenID Connect
 [9] https://medium.com/@robert.broeckelmann/saml2-vs-jwt-understanding-openid-connect-part-2-f361ca867baa
+
+     Curity Using the OpenID Connect Hybrid Flow.
 [10] https://curity.io/resources/learn/hybrid-flow/
+     Auth0 Authorization Code Flow with Proof Key for Code Exchange (PKCE).
 [11] https://auth0.com/docs/flows/authorization-code-flow-with-proof-key-for-code-exchange-pkce
+
+    OpenId Specification 3.1.3.7. ID Token Validation.
 [12] https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
+     Mrochon August 04, 2016. Single SignOn is easy, Single Signout is not.
 [13] https://mrochon.azurewebsites.net/2016/08/04/single-signon-is-easy-single-signout-is-not/
+     Ashen De Silva August 27, 2018 OpenID Connect — Session Management.
 [14] https://ashend.medium.com/openid-connect-session-management-d0c8e7dc252b
+
+     OpenId Specification OpenID Connect RP-Initiated Logout 1.0
 [15] https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+     Ashen De Silva December 04, 2018 OpenID Connect Backchannel Logout.
 [16] https://ashend.medium.com/openid-connect-backchannel-logout-144a3198d2a 
+
+  Github July 07, 2021 IdentityServer4
 [17] https://github.com/IdentityServer/IdentityServer4 
+ 
+    Microsoft May 13, 2020 IdentityServer for cloud-native applications.
 [18] https://docs.microsoft.com/en-us/dotnet/architecture/cloud-native/identity-server 
+
+     Docs.IdentityServer Welcome to IdentityServer4 (latest)
 [19] https://docs.identityserver.io/en/latest/index.html
+
+     Docs.IdentityServer IdentityServer4 Sign In Topic (latest)
 [20] https://docs.identityserver.io/en/latest/topics/signin.html
+     
+	 Angular Lib for OpenID Connect & OAuth2. 
 [21] https://www.npmjs.com/package/angular-auth-oidc-client
+     Github August 19, 2021 Use OpenId Connect with Dotnet Core & OneLogin.
 [22] https://github.com/onelogin/openid-connect-dotnet-core-sample 
