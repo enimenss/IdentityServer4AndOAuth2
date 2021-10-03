@@ -1,1 +1,26 @@
- 
+ IP/DNS: fttuk.centroidsol.com
+Port: 26010
+LoginUsername: MAP_TEST
+LoginPassword: j0%$P*di
+SenderCompID: MD_MAP_TEST
+TargetCompID: CENTROID_SOL
+SSL: N
+ResetOnLogon: Y
+Session: Friday:00:00:00-Friday:00:00:00
+
+Trading Connection
+
+https://community.auth0.com/t/migration-guidance-from-asp-net-core-identity/26643
+
+
+session schedule
+
+
+https://auth0.com/docs/security/data-security/user-data-storage
+https://auth0.com/docs/users/user-profiles/update-user-profiles-using-your-database
+https://auth0.com/blog/consolidating-multiple-identity-sources-with-auth0/
+https://community.auth0.com/t/how-to-handle-multiple-apis-using-audience-token/7871
+https://auth0.com/docs/users/metadata
+https://community.auth0.com/t/differences-between-client-metadata-and-app-metadata/21388
+https://community.auth0.com/t/how-to-create-a-user-on-the-service-side-whenever-a-user-register-to-my-app-through-auth0/7056/2?fbclid=IwAR1dTEcZRLVpWT2Qx0wpIyikPqN1SguIWaHYXGEHqwd66mhDJu-o7VmDdiw
+https://auth0.com/docs/best-practices/rules-best-practices/rules-execution-best-practices
