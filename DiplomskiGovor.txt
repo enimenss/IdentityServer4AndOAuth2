@@ -1,0 +1,137 @@
+
+
+
+Uvod
+Slide 1
+
+Termin Single Sign On (SSO) se odnosi na mogućnost korisnika da prijavljivanjem na jednu aplikaciju
+ unosom svojih kredencijala, bude automatski prijavljen I u ostalim aplikacijama,
+ bez obzira na platformu, tehnologiju ili domen koji korisnik koristi.
+Korisnik se prijavljuje samo jednom pa otuda I naziv Single Sign On.
+Na primer ako se prijavite na Google uslugu kao što je Gmail, automatski ćete biti autentikovani na Youtube,
+ Google Analytics, Google Cloud I na ostale Google aplikacije.
+ 
+U teorijskom delu ovog rada ćemo objasniti detaljnije šta je SSO,
+ koje su prednosti.
+ Fokus će biti na implementaciji OpenId Connect – protokola. Uvodi pojam tokena identiteta
+ 
+ OpenID Connect protokol definiše nekoliko načina odnosno toka za pribavljanje ovih tokena,
+ i u ovom radu će biti detaljnije objašnjeno koje tokove treba koristiti da bi se obezbedila
+ sigurnost u zavisnosti od prirode samih aplikacija.
+ 
+ Single Sign On autentikacija sada postaje tražena više nego ikada. U današnje vreme skoro svaka aplikacija ili vebsajt zahteva neku formu autentikacije da bi imala pristup zaštićenim resursima. Kako broj aplikacija i servisa raste, tako potreba za centralizovanim sistemom prijave postaje neophodna.
+Koncept centralizovanog sistema prijave je poznat kao Ujedinjeni sistem identiteta (eng. Federated Identity).
+ 
+ Slide 2
+ 
+Ujedinjeni sistemi identiteta rešavaju nekoliko problema:
+•	Autentifikaciju
+•	Pravo pristupa resursima
+•	Razmena korisnickih podataka
+•	Upravljanje korisnicima
+
+Aspekt Autentifikacije bavi se potvrđivanjem i validiranjem korisničkih podataka, tj. kredencijala,
+ i utvrđivanjem identiteta korisnika.
+
+Pravo pristupa resursima kao što ime kaže se bavi restrikcijama pristupa određene aplikacije određenim resursima
+ (na primer da li aplikacija ili korisnik ima pravo da pristupi nekom resursu).
+ 
+Razmena korisničkih podataka bavi se razmenom podataka kroz različite sisteme za upravljanje korisnicima.
+Na primer polja kao što su “Pravo ime“ mogu biti prisutna u više sistema.
+Ujedinjeni sistem identiteta sprečava dupliranje podataka povezivanjem povezanih atributa (eng. linking).
+
+Upravljanje korisnicima je povezano sa samom administracijom (registracija novog korisnika, brisanje ili ažuriranje postojećeg korisnika). 
+ 
+ 
+ Slide 3
+ 
+ U razvoju veb aplikacija pre ili kasnije se javlja potreba da korisnik koji se prijavio preko domena A
+ bude automatski prijavljen i na aplikaciji sa domenom B.
+ 
+Bez Single Sign On mehanizma korisnik bi morao da se autentifikuje unešenjem kredencijala na svakoj aplikaciji (domenu) kojoj pristupa,
+ bez obzira što te aplikacije čine jednu veću logičku celinu.
+ 
+Očigledno resenje ovakvog problema jeste da informacije (identiteta) dele sesije između različitih domena.
+ Međutim iz sigurnosnih razloga, veb pretraživači forsiraju politiku zvanu Ista politika porekla.
+ 
+Ova politika definiše da kolačići (ili drugi podaci) mogu da dostupni samo njihovom vlasniku.
+
+Slide 4
+
+Postojanje Ujedinjenog Sistema Identiteta (na posebnom domenu C) preko koga je izvrsena autentikacija i preko koga se sesija deli sa ostalim domenima na neki način.
+Kada korisnik ode na aplikaciju sa domenom A koja zahteva autentikaciju, 
+automatski biva redirektovan na domen C (Ujedinjeni sistem identiteta).
+ Kako je korisnik već prošao proces autentikacije na domenu C,
+ na primer preko domena B,
+ korisnik će biti vraćen na originalni domen A sa potrebnim informacijama identiteta bez potrebe za ponovnim unosom kredencijala.
+ 
+ Trenutno najpoznatiji protokoli za Single Sign On su:
+ OpenID Connect, Facebook Connect, Security Assertion Markup Language (SAML), Microsoft Account.
+Za dalji rad izabrana je implementacija OpenID connect (OIDC) protokola za postizanje Single Sign On-a.
+
+
+Side 5
+
+Korisnicima je glavna prednost što više ne moraju da pamte na desetine lozinki. Ovo čak oslobađa korisnika od upravljanja pojedinačnih lozinki na svakoj aplikaciji ponaosob,
+ zbog čega se SSO prijave takođe smatraju i menadžerima lozinki (brisanje/ dodavanje usera)
+ 
+ Takođe, lozinku treba uneti samo na jednom interfejsu, a to smanjuje potencijal za napade (pecanje) u sistemu.
+ Pod ovim okolnostima, kompanija može sebi priuštiti da usresredi rad na zastiti samo na jednom mestu. 
+ 
+ SSO postaje takozvano usko grlo.
+ Takodje ako kredencijali padnu u pogresne ruke
+ 
+ Ako neko istraži SSO prijavu na Internetu, pronalazi relativno malo negativnih informacija o postupku višestruke potvrde identiteta. 
+ Umešto toga, godinama se to tretira kao sasvim prikladno otkriće ,
+ što se tiče udobnosti i sigurnosti podataka
+ 
+ 
+ Slide 6
+ 
+ OIDC je izgrađen na vrhu OAuth2 protokola i koristi dodatni token u JWT (eng. Json Web Token) formatu,
+ koji se naziva ID Token.
+ Posebno je fokusiran na autentikaciju korisnika.
+ S obzirom da je OIDC nadogradnja OAuth2 protokola,
+ predstavlja potpuno razvijen protokol za autentikaciju i dodelu prava pristupa (autorizaciju),
+ koji intenzivno koristi sigurnosne JSON tokene za komunikaciju izmedju servisa,
+ aplikacija i servera identiteta (IdP)
+ 
+ 
+ Slide 7
+ 
+ Vlasnik Resursa (Resource Owner)
+  Entitet sposoban da odobri pristup zaštićenom resursu. Kada je entitet osoba, ona se naziva korisnik.
+
+  Klijent
+ Nezavisna aplikacija koja želi pristup privatnim resursima vlasnika resursa. OAuth klijent može da šalje
+ zahteve resursima u ime vlasnika resursa, nakon što mu vlasnik dodeli ovlašćenje. OAuth uvodi dve vrste klijenata:
+•	Poverljivi: Registrovani su kao klijentova tajna (client secret)
+•	Javni
+U terminologiji OIDC-a cešto se za klijente koristi i termin poverljiva strana odnosno aplikacija (eng. Relayng Party RP).
+
+ 
+
+ OAuth server (IdP)
+Poznat kao server za autorizaciju (U OIDC je poznat po terminologiji Server Identiteta ili OpenID OP).
+Server koji OAuth klijentima daje opseg i pravo pristupa zaštićenom resursu u ime vlasnika resursa. Server izdaje token pristupa (eng. access token), 
+
+Server Resursa (Resource Server)
+Server koji hostuje zaštićene resurse. Koristi tokene prava pristupa (eng. access tokens) za validaciju i vraćanju resursa klijentu, ukoliko klijent ima prava pristupa na određeni resurs.
+Server Resursa takodje može biti  i OAuth Server
+
+Token Identiteta (ID Token)
+OIDC proširuje mogućnosti autentifikacije OAuth2 tako što uključuje takozvani Token identiteta
+ izdat kao Json Veb Token (JWT).
+ ID tokeni su konceptualno analogni ID karticama, jer sadrže skup tvrdnja (eng. claims)
+ o korisniku, poput imena, e-pošte i ostalih ličnih podataka korisnika.
+ Ovo se razlikuje od tokena prava pristupa (eng. access token) u tome što token prava pristupa
+ ne uključuje nikakve informacije identiteta, već postoje za autorizaciju pristupa serverima resursa
+ sa ograničenim opsegom pristupa. Token prava pristupa nije dokaz za potvrdu identiteta,
+ zato što se tokeni prava pristupa mogu dobiti na više nacina.
+ Zato se ID Tokeni koriste za potvrdu Identiteta korisnika
+
+ Dozvola koja predstavlja ovlašćenje vlasnika resursa za pristup zaštićenim resursima.
+ OAuth2 Klijenti koriste odobrenje za dobijanje tokena (access token, id token, refresh token).
+ Postoje četiri tipa odobrenja autorizacije, odnosno tokova odobrenja: 
+ 
+
