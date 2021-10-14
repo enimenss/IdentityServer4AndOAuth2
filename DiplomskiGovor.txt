@@ -11,18 +11,49 @@ Korisnik se prijavljuje samo jednom pa otuda I naziv Single Sign On.
 Na primer ako se prijavite na Google uslugu kao što je Gmail, automatski ćete biti autentikovani na Youtube,
  Google Analytics, Google Cloud I na ostale Google aplikacije.
  
-U teorijskom delu ovog rada ćemo objasniti detaljnije šta je SSO,
- koje su prednosti.
- Fokus će biti na implementaciji OpenId Connect – protokola. Uvodi pojam tokena identiteta
+U teorijskom delu ovog rada ćemo malo vise uci u detalje šta je SSO,
+ koje su prednosti , problemi kao i protokole koji se koriste u implementaciji.
  
- OpenID Connect protokol definiše nekoliko načina odnosno toka za pribavljanje ovih tokena,
- i u ovom radu će biti detaljnije objašnjeno koje tokove treba koristiti da bi se obezbedila
- sigurnost u zavisnosti od prirode samih aplikacija.
+ Single Sign On autentikacija sada postaje tražena više nego ikada. U današnje vreme skoro svaka aplikacija ili 
+ vebsajt zahteva neku formu autentikacije da bi imala pristup zaštićenim resursima. 
+ Kako broj aplikacija i servisa raste, tako potreba za centralizovanim sistemom prijave postaje neophodna.
+ Koncept centralizovanog sistema prijave je poznat kao Ujedinjeni sistem identiteta (eng. Federated Identity).
  
- Single Sign On autentikacija sada postaje tražena više nego ikada. U današnje vreme skoro svaka aplikacija ili vebsajt zahteva neku formu autentikacije da bi imala pristup zaštićenim resursima. Kako broj aplikacija i servisa raste, tako potreba za centralizovanim sistemom prijave postaje neophodna.
-Koncept centralizovanog sistema prijave je poznat kao Ujedinjeni sistem identiteta (eng. Federated Identity).
  
- Slide 2
+  Slide 2
+ 
+ U razvoju veb aplikacija pre ili kasnije se javlja potreba da korisnik koji se prijavio preko domena A
+ bude automatski prijavljen i na aplikaciji sa domenom B.
+ 
+Bez Single Sign On mehanizma korisnik bi morao da se autentifikuje unešenjem kredencijala na svakoj aplikaciji (domenu) kojoj pristupa,
+ bez obzira što te aplikacije čine jednu veću logičku celinu.
+ 
+Očigledno resenje ovakvog problema jeste da informacije (identiteta) dele sesije između različitih domena.
+ Međutim iz sigurnosnih razloga, veb pretraživači forsiraju politiku zvanu Ista politika porekla.
+ 
+Ova politika definiše da kolačići (ili drugi podaci) mogu da dostupni samo njihovom vlasniku.
+
+Ocigledno je da za resavanje ovakvog problema potrebno uvesti centralni sistem koji bi kontrolisao razmenu podataka
+o identitetu.
+
+
+ 
+
+Slide 3
+
+Postojanje Ujedinjenog Sistema Identiteta (na posebnom domenu C) preko koga je izvrsena autentikacija i preko koga
+ se sesija deli sa ostalim domenima na neki način.
+Kada korisnik ode na aplikaciju sa domenom A koja zahteva autentikaciju, 
+automatski biva redirektovan na domen C (Ujedinjeni sistem identiteta).
+ Kako je korisnik već prošao proces autentikacije na domenu C,
+ na primer preko domena B,
+ korisnik će biti vraćen na originalni domen A sa potrebnim informacijama identiteta bez potrebe za ponovnim unosom kredencijala.
+ 
+ Trenutno najpoznatiji protokoli za Single Sign On su:
+ OpenID Connect, Facebook Connect, Security Assertion Markup Language (SAML), Microsoft Account.
+Za dalji rad izabrana je implementacija OpenID connect (OIDC) protokola za postizanje Single Sign On-a.
+
+ Slide 4
  
 Ujedinjeni sistemi identiteta rešavaju nekoliko problema:
 •	Autentifikaciju
@@ -38,41 +69,16 @@ Pravo pristupa resursima kao što ime kaže se bavi restrikcijama pristupa odre�
  
 Razmena korisničkih podataka bavi se razmenom podataka kroz različite sisteme za upravljanje korisnicima.
 Na primer polja kao što su “Pravo ime“ mogu biti prisutna u više sistema.
-Ujedinjeni sistem identiteta sprečava dupliranje podataka povezivanjem povezanih atributa (eng. linking).
+
 
 Upravljanje korisnicima je povezano sa samom administracijom (registracija novog korisnika, brisanje ili ažuriranje postojećeg korisnika). 
  
- 
- Slide 3
- 
- U razvoju veb aplikacija pre ili kasnije se javlja potreba da korisnik koji se prijavio preko domena A
- bude automatski prijavljen i na aplikaciji sa domenom B.
- 
-Bez Single Sign On mehanizma korisnik bi morao da se autentifikuje unešenjem kredencijala na svakoj aplikaciji (domenu) kojoj pristupa,
- bez obzira što te aplikacije čine jednu veću logičku celinu.
- 
-Očigledno resenje ovakvog problema jeste da informacije (identiteta) dele sesije između različitih domena.
- Međutim iz sigurnosnih razloga, veb pretraživači forsiraju politiku zvanu Ista politika porekla.
- 
-Ova politika definiše da kolačići (ili drugi podaci) mogu da dostupni samo njihovom vlasniku.
-
-Slide 4
-
-Postojanje Ujedinjenog Sistema Identiteta (na posebnom domenu C) preko koga je izvrsena autentikacija i preko koga se sesija deli sa ostalim domenima na neki način.
-Kada korisnik ode na aplikaciju sa domenom A koja zahteva autentikaciju, 
-automatski biva redirektovan na domen C (Ujedinjeni sistem identiteta).
- Kako je korisnik već prošao proces autentikacije na domenu C,
- na primer preko domena B,
- korisnik će biti vraćen na originalni domen A sa potrebnim informacijama identiteta bez potrebe za ponovnim unosom kredencijala.
- 
- Trenutno najpoznatiji protokoli za Single Sign On su:
- OpenID Connect, Facebook Connect, Security Assertion Markup Language (SAML), Microsoft Account.
-Za dalji rad izabrana je implementacija OpenID connect (OIDC) protokola za postizanje Single Sign On-a.
-
 
 Side 5
 
-Korisnicima je glavna prednost što više ne moraju da pamte na desetine lozinki. Ovo čak oslobađa korisnika od upravljanja pojedinačnih lozinki na svakoj aplikaciji ponaosob,
+Korisnicima je glavna prednost što više ne moraju da pamte na desetine lozinki. Ovo čak oslobađa korisnika od
+ upravljanja pojedinačnih lozinki na
+ svakoj aplikaciji ponaosob,
  zbog čega se SSO prijave takođe smatraju i menadžerima lozinki (brisanje/ dodavanje usera)
  
  Takođe, lozinku treba uneti samo na jednom interfejsu, a to smanjuje potencijal za napade (pecanje) u sistemu.
@@ -81,16 +87,28 @@ Korisnicima je glavna prednost što više ne moraju da pamte na desetine lozinki
  SSO postaje takozvano usko grlo.
  Takodje ako kredencijali padnu u pogresne ruke
  
- Ako neko istraži SSO prijavu na Internetu, pronalazi relativno malo negativnih informacija o postupku višestruke potvrde identiteta. 
+ Ako neko istraži SSO prijavu na Internetu, pronalazi relativno malo negativnih informacija o postupku višestruke
+ potvrde identiteta. 
  Umešto toga, godinama se to tretira kao sasvim prikladno otkriće ,
  što se tiče udobnosti i sigurnosti podataka
  
  
  Slide 6
  
+ Za postizanje SSO u ovom radu cemo koristiti OIDC protokol koji se bazira na oAuth2 i ukratko cemo objasniti
+ njihovu razliku i cemu sluze.
+ 
+ OAuth2 je protokol za autorizaciju. Kao Као 
+ такав, осмишљен је првенствено као средство за одобравање приступа скупу ресурса,
+ на пример, удаљеним АПИ -јем или корисничким подацима
+ 
+ Uvodi pojam Tokena za pravo pristupa (access_token) 
+ kоји представља овлашћење за приступ ресурсима у име крајњег корисника.
+ 
+ 
+ OIDC je posebno fokusiran na autentikaciju korisnika.
  OIDC je izgrađen na vrhu OAuth2 protokola i koristi dodatni token u JWT (eng. Json Web Token) formatu,
  koji se naziva ID Token.
- Posebno je fokusiran na autentikaciju korisnika.
  S obzirom da je OIDC nadogradnja OAuth2 protokola,
  predstavlja potpuno razvijen protokol za autentikaciju i dodelu prava pristupa (autorizaciju),
  koji intenzivno koristi sigurnosne JSON tokene za komunikaciju izmedju servisa,
@@ -116,7 +134,8 @@ Poznat kao server za autorizaciju (U OIDC je poznat po terminologiji Server Iden
 Server koji OAuth klijentima daje opseg i pravo pristupa zaštićenom resursu u ime vlasnika resursa. Server izdaje token pristupa (eng. access token), 
 
 Server Resursa (Resource Server)
-Server koji hostuje zaštićene resurse. Koristi tokene prava pristupa (eng. access tokens) za validaciju i vraćanju resursa klijentu, ukoliko klijent ima prava pristupa na određeni resurs.
+Server koji hostuje zaštićene resurse. Koristi tokene prava pristupa (eng. access tokens) za validaciju i vraćanju resursa klijentu,
+ ukoliko klijent ima prava pristupa na određeni resurs.
 Server Resursa takodje može biti  i OAuth Server
 
 Token Identiteta (ID Token)
@@ -131,7 +150,119 @@ OIDC proširuje mogućnosti autentifikacije OAuth2 tako što uključuje takozvan
  Zato se ID Tokeni koriste za potvrdu Identiteta korisnika
 
  Dozvola koja predstavlja ovlašćenje vlasnika resursa za pristup zaštićenim resursima.
- OAuth2 Klijenti koriste odobrenje za dobijanje tokena (access token, id token, refresh token).
+ OAuth2 Klijenti koriste odobrenje i tokove za dobijanje tokena (access token, id token, refresh token).
+ 
+ Slide 8
  Postoje četiri tipa odobrenja autorizacije, odnosno tokova odobrenja: 
+ 
+ Koji tok ce se koristiti za dobijanje tokena zavisi od same prirode klijentske aplikacije
+ i sada cu objasniti svaki od toka i preporuke za koji se opredeliti u zavisnosti od
+ prirode aplikacije da bih izbegli sigurnosne rizike.
+ 
+ 
+ Slide 9
+ 
+ Tok Autorizacionim kodom.
+ 
+ Rekli smo da OAuth2 definise 2 tipa klijenta (privatne (sa klijentskom tajnom) i javne)
+ 
+ Tok Autorizacionim kodom je namenjen privatnim klijentima odnosno u toku pribavljanja tokena
+ klijentska stana mora poslati client_secret radi validacije na strani servera identiteta
+ 
+ Da klijentska tajna ne bi pala u pogresne ruke , preporuka je da ovaj tok koriste iskljucivo
+ aplikacije koje mogu sigurno da cuvaju client_secret odnosno aplikacije sa svojom serverskom backend stranom
+ na primer Standardne MVC web aplikacije.
+ 
+ Kada korisnik pristupi klijentskoj aplikaciji ona proverava da li je korisnik prosao autentikaciju
+ odnosno da li je prisutan token identiteta.
+ 
+ ukoliko nije klijentsa alikacija salje sledeci authorize zahtev sa parametrima
+ 
+ •	Scope = openid profile email – Scope parametrom se zapravo specificiraju specifična prava,
+ odnosno opseg pristupa sa kojima se izdaju tokeni i u sklopu OIDC-a se mogu zahtevati samo specifične
+ informacije koje će biti izdate u tokenima. Svaki scope se navodi sa razmakom u zahtevu,
+ i na primer openid nam kaže da želimo izdavanje identity tokena  samo sa korisnikovim identifikacionim kodom.
+ Profile, email scopom želimo da u tokenu identiteta dobijemo više informacija o korisniku poput
+ emaila, slike, imena itd
+ 
+ Server identiteta vlidira ove parametre i proverava da li postoji kolacic sesije , odnosno da li je 
+ korisnik vec prosao authentikaciju na domenu identiti servera.
+ 
+ Ukoliko nije server identiteta ce izvrsiti redirekciju na centalizovani login interfejs.
+ 
+ Tehnicki server identiteta ne vrsi redirekciju vec samo vrati klijentskoj aplikaciji 302 redirect kod nakon cega
+ pretrazivac odradi redirekciju.
+ 
+ Nakon sto korisnik unese kredencijale , formira se kolacic sesije i pretrazivac ponovo zove authorize
+ koja ovoga puta vraca pretrazivavcu 302 odgovor u sledecem obliku.
+ 
+ Bitne zakljucki jesu da :
+     •	Klijentska aplikacija ne vidi kredencijale (šifru) krajnjeg korisnika
+     •	Pretraživač ne vidi tokene koji se prenose izmedju Servera identiteta (IdP) i Klijentske apikacije
+	 
+ 
+ Slide 11
+ 
+ Implicitni tok je sličan toku autorizacionim kodom samo je pojednostavljen
+ i prvobitno se preporučivao native i javaskript aplikacijama, gde je token odmah vraćen aplikaciji,
+ bez dodatnog koraka za razmenu autorizacionog koda.
+ S obzirom da native i javascript aplikacije ne mogu sigurno čuvati klijentsku tajnu (client secret),
+ ovaj tok uglavno koristi javne klijente sa strane servera identiteta.
+
+ Važno je napomenuti da se ne preporučuje upotreba implicitnog toka (a neki serveri taj tok u potpunosti zabranjuju) zbog sigurnosnih rizika vraćanja tokena u HTTP preusmeravanju bez ikakve potvrde da ga je klijentska aplikacija primila.
+Javni klijenti poput native i javascript aplikacija, sada bi trebalo da koriste Tok Autorizacionim kodom sa dokazom ključa za razmenu kodova (eng. Authorization Code Flow with Proof Key for Code Excange - PKCE), koji je napravljen da prevaziđe ove sigurnosne probleme za javne klijente servera identiteta.
+
+
+
+
+Hibridni Tok
+
+Hibridni tok je kombinacija implicitnog toka i toka autorizacionim kodom.
+ Svi koraci su isti s tim što se token identiteta vraća implicitnim tokom kroz pretraživač,
+ a token prava pristupa preko autorizacionog koda.
+Aplikacije koje su u stanju da bezbedno čuvaju klijentske tajne (MVC aplikacije),
+ mogu imati koristi od upotreba hibridnog toka, koji omogućava klijentskoj aplikaciji (RP) trenutni pristup tokenu identiteta,
+ a istovremeno obezbeđuje sigurno preuzimanje tokena za prava pristupa (access_token, refresh_token, 
+ takodje i novi id_token) razmenom koda i klijentske tajne.
+Ovo može biti korisno u situacijama kada klijentska aplikacija mora odmah pristupiti informacijama o korisniku,
+ ali mora izvršiti određenu obradu i validaciju sa serverom identiteta pre nego što pristupi zaštićenim resursima.
+ 
+ 
+ Slide 12
+ 
+ Tok Autorizacionim kodom sa dokazom kljuca za razmenu kodova
+ (Authorization Code Flow with Proof Key for Code Excange - PKCE)
+ 
+ Dizajniran je kao nadogradnja toka autorizacionim kodom, 
+ za aplikacije koje koriste javne klijente i koje ne mogu sigurno čuvati klijentsku tajnu (client_secret).
+ Ovaj tok se smatra najboljom praksom kada se koriste SPA (eng. Single Page Applications) 
+ ili aplikacije za mobilne uređaje. Ključna razlika između standardnog toka autorizacionim kodom
+ je ta što aplikacije ne moraju da prosleđuju klijentsku tajnu (client_secret).
+ 
+ •	code_challange – klijentska aplikacija na svojoj strani generiše random code_verifier, zatim se taj niz karaktera hešira i ta vrednost se šalje kao code_challange
+•	code_challange_method – korišćena hash metoda za heširanje code_verifier (uglavnom se koristi SHA256)
+
+
+Slide 13
+
+ Kao što možemo videti, sada u zahtevu za dobijanje tokena umešto klijentske tajne (client_secret),
+ klijentska aplikacija šalje izvorni string (niz karaktera) code_verifier.
+Sada server identiteta na osnovu dobijenih code_challenge i code_challenge_method 
+parametra iz predhodnog zahteva može primeniti
+ heširanje istom metodom nad code_verifier parametru i
+ uporediti da li se nastala heširana vrednost slaže sa  code_challange parametrom,
+ i time potvrdi klijentski zahtev i izda tokene.
+
+ 
+ Slide 14
+ 
+ Sada cemo ukratko opisati arhitekturu sistema
+ 
+ 
+ 
+
+
+ 
+ 
  
 
