@@ -25,7 +25,8 @@ U teorijskom delu ovog rada ćemo malo vise uci u detalje šta je SSO,
  U razvoju veb aplikacija pre ili kasnije se javlja potreba da korisnik koji se prijavio preko domena A
  bude automatski prijavljen i na aplikaciji sa domenom B.
  
-Bez Single Sign On mehanizma korisnik bi morao da se autentifikuje unešenjem kredencijala na svakoj aplikaciji (domenu) kojoj pristupa,
+Bez Single Sign On mehanizma korisnik bi morao da se autentifikuje unešenjem kredencijala na svakoj
+ aplikaciji (domenu) kojoj pristupa,
  bez obzira što te aplikacije čine jednu veću logičku celinu.
  
 Očigledno resenje ovakvog problema jeste da informacije (identiteta) dele sesije između različitih domena.
@@ -67,7 +68,7 @@ Aspekt Autentifikacije bavi se potvrđivanjem i validiranjem korisničkih podata
 Pravo pristupa resursima kao što ime kaže se bavi restrikcijama pristupa određene aplikacije određenim resursima
  (na primer da li aplikacija ili korisnik ima pravo da pristupi nekom resursu).
  
-Razmena korisničkih podataka bavi se razmenom podataka kroz različite sisteme za upravljanje korisnicima.
+Razmena korisničkih podataka bavi se razmenom podataka kroz različite sisteme.
 Na primer polja kao što su “Pravo ime“ mogu biti prisutna u više sistema.
 
 
@@ -87,8 +88,7 @@ Korisnicima je glavna prednost što više ne moraju da pamte na desetine lozinki
  SSO postaje takozvano usko grlo.
  Takodje ako kredencijali padnu u pogresne ruke
  
- Ako neko istraži SSO prijavu na Internetu, pronalazi relativno malo negativnih informacija o postupku višestruke
- potvrde identiteta. 
+ Ako neko istraži SSO prijavu na Internetu, pronalazi relativno malo negativnih informacija. 
  Umešto toga, godinama se to tretira kao sasvim prikladno otkriće ,
  što se tiče udobnosti i sigurnosti podataka
  
@@ -146,11 +146,11 @@ OIDC proširuje mogućnosti autentifikacije OAuth2 tako što uključuje takozvan
  Ovo se razlikuje od tokena prava pristupa (eng. access token) u tome što token prava pristupa
  ne uključuje nikakve informacije identiteta, već postoje za autorizaciju pristupa serverima resursa
  sa ograničenim opsegom pristupa. Token prava pristupa nije dokaz za potvrdu identiteta,
- zato što se tokeni prava pristupa mogu dobiti na više nacina.
- Zato se ID Tokeni koriste za potvrdu Identiteta korisnika
+ Zato se ID Tokeni koriste za potvrdu Identiteta korisnika.
 
- Dozvola koja predstavlja ovlašćenje vlasnika resursa za pristup zaštićenim resursima.
- OAuth2 Klijenti koriste odobrenje i tokove za dobijanje tokena (access token, id token, refresh token).
+
+ Dozvola koja predstavlja ovlašćenje vlasnika resursa klijentskoj aplikaciji za pristup zaštićenim resursima.
+ OAuth2 Klijenti koriste odobrenje i definisane tokove za dobijanje tokena (access token, id token, refresh token).
  
  Slide 8
  Postoje četiri tipa odobrenja autorizacije, odnosno tokova odobrenja: 
@@ -196,6 +196,9 @@ OIDC proširuje mogućnosti autentifikacije OAuth2 tako što uključuje takozvan
  Nakon sto korisnik unese kredencijale , formira se kolacic sesije i pretrazivac ponovo zove authorize
  koja ovoga puta vraca pretrazivavcu 302 odgovor u sledecem obliku.
  
+ User Info endpoint 
+ The maximum allowed size for an ID Token is around 3.5kb
+ 
  Bitne zakljucki jesu da :
      •	Klijentska aplikacija ne vidi kredencijale (šifru) krajnjeg korisnika
      •	Pretraživač ne vidi tokene koji se prenose izmedju Servera identiteta (IdP) i Klijentske apikacije
@@ -209,8 +212,11 @@ OIDC proširuje mogućnosti autentifikacije OAuth2 tako što uključuje takozvan
  S obzirom da native i javascript aplikacije ne mogu sigurno čuvati klijentsku tajnu (client secret),
  ovaj tok uglavno koristi javne klijente sa strane servera identiteta.
 
- Važno je napomenuti da se ne preporučuje upotreba implicitnog toka (a neki serveri taj tok u potpunosti zabranjuju) zbog sigurnosnih rizika vraćanja tokena u HTTP preusmeravanju bez ikakve potvrde da ga je klijentska aplikacija primila.
-Javni klijenti poput native i javascript aplikacija, sada bi trebalo da koriste Tok Autorizacionim kodom sa dokazom ključa za razmenu kodova (eng. Authorization Code Flow with Proof Key for Code Excange - PKCE), koji je napravljen da prevaziđe ove sigurnosne probleme za javne klijente servera identiteta.
+ Važno je napomenuti da se ne preporučuje upotreba implicitnog toka (a neki serveri taj tok u potpunosti zabranjuju)
+ zbog sigurnosnih rizika vraćanja tokena u HTTP preusmeravanju bez ikakve potvrde da ga je klijentska aplikacija primila.
+Javni klijenti poput native i javascript aplikacija, sada bi trebalo da koriste Tok Autorizacionim kodom sa dokazom ključa za razmenu kodova
+ (eng. Authorization Code Flow with Proof Key for Code Excange - PKCE), 
+ koji je napravljen da prevaziđe ove sigurnosne probleme za javne klijente servera identiteta.
 
 
 
@@ -221,7 +227,8 @@ Hibridni tok je kombinacija implicitnog toka i toka autorizacionim kodom.
  Svi koraci su isti s tim što se token identiteta vraća implicitnim tokom kroz pretraživač,
  a token prava pristupa preko autorizacionog koda.
 Aplikacije koje su u stanju da bezbedno čuvaju klijentske tajne (MVC aplikacije),
- mogu imati koristi od upotreba hibridnog toka, koji omogućava klijentskoj aplikaciji (RP) trenutni pristup tokenu identiteta,
+ mogu imati koristi od upotreba hibridnog toka, koji omogućava klijentskoj aplikaciji (RP)
+ trenutni pristup tokenu identiteta,
  a istovremeno obezbeđuje sigurno preuzimanje tokena za prava pristupa (access_token, refresh_token, 
  takodje i novi id_token) razmenom koda i klijentske tajne.
 Ovo može biti korisno u situacijama kada klijentska aplikacija mora odmah pristupiti informacijama o korisniku,
@@ -240,7 +247,7 @@ Ovo može biti korisno u situacijama kada klijentska aplikacija mora odmah prist
  je ta što aplikacije ne moraju da prosleđuju klijentsku tajnu (client_secret).
  
  •	code_challange – klijentska aplikacija na svojoj strani generiše random code_verifier, zatim se taj niz karaktera hešira i ta vrednost se šalje kao code_challange
-•	code_challange_method – korišćena hash metoda za heširanje code_verifier (uglavnom se koristi SHA256)
+ •code_challange_method – korišćena hash metoda za heširanje code_verifier (uglavnom se koristi SHA256)
 
 
 Slide 13
@@ -257,6 +264,9 @@ parametra iz predhodnog zahteva može primeniti
  Slide 14
  
  Sada cemo ukratko opisati arhitekturu sistema
+ 
+ 
+ Slide 21
  
  
  

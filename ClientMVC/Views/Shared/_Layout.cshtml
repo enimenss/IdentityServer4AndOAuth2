@@ -58,22 +58,6 @@
     <script src="~/lib/jquery/dist/jquery.cookie.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-
-            setInterval(function () {
-                 $.ajax({
-            type: 'POST',
-            url: '/Home/CheckState',
-            success: function(ajaxReturnedData){
-                     },
-                     error: function (ajaxErrorData) {
-                         location.reload();
-                     }
-            });
-            }, 3000);
-        });
-    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

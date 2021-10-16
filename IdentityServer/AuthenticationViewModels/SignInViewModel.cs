@@ -8,8 +8,6 @@ namespace IdentityServer.AuthenticationViewModels
 {
     public class SignInViewModel
     {
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 import { ErrorService } from './shared/services/error.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerHttpInterceptor } from './shared/interceptors/server-http.interceptor';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import {  AuthModule, LogLevel,  OidcConfigService, OidcSecurityService } from 'angular-auth-oidc-client';
 
@@ -34,11 +34,9 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
     AuthModule.forRoot(),
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [
     OidcConfigService,
@@ -47,13 +45,7 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
         useFactory: configureAuth,
         deps: [OidcConfigService],
         multi: true,
-    },
-    ErrorService,
-    { provide: HTTP_INTERCEPTORS,
-      useClass: ServerHttpInterceptor,
-       multi: true,
-       deps: [OidcSecurityService]
-    },
+    }
    ],
   bootstrap: [AppComponent]
 })

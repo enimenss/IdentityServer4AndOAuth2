@@ -1,2 +1,17 @@
-<p>home works!</p>
-<button (click)='signOut()'>SignOut</button>
+
+
+<mat-card class="mat-elevation-z2">
+    <h2>Angular Client</h2>
+    <div fxLayout="row" class="mat-card-row">
+        <p style="margin-right: 16px;" class="mat-card-row-key">Subject: </p>
+        <p class="mat-card-row-value"><strong>{{this.subject}}</strong></p>
+    </div>
+    <div fxLayout="row" class="mat-card-row">
+        <p style="margin-right: 16px;" class="mat-card-row-key">Email: </p>
+        <p class="mat-card-row-value"><strong>{{this.email}}</strong></p>
+     </div>
+     <div fxLayout="row" class="mat-card-row">
+        <p style="margin-right: 16px;" class="mat-card-row-key">ID Token:</p>
+        <p style="max-width: 500px !important; word-wrap: break-word;" class="mat-card-row-value"><strong style="width: 500px !important; word-wrap: break-word;">{{this.id_token}}</strong></p>
+      </div>
+</mat-card>

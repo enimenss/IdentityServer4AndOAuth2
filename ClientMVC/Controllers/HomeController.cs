@@ -29,7 +29,7 @@ namespace ClientMVC.Controllers
         {
             return Challenge(new Microsoft.AspNetCore.Authentication.AuthenticationProperties
             {
-                RedirectUri = "/Home/Index",
+                RedirectUri = "/Home/Privacy",
 
             }, "OpenIdConnect");
 
@@ -42,30 +42,18 @@ namespace ClientMVC.Controllers
             var id_token = await HttpContext.GetTokenAsync("id_token");
             var claims = HttpContext.User.Claims;
 
-            return View();
-        }
-
-
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> LocalLogout(string sid)
-        {
-            if (User.Identity.IsAuthenticated)
+            var privacyViewModel = new PrivacyViewModel
             {
-                var currentSid = User.FindFirst("sid")?.Value ?? "";
-                if (string.Equals(currentSid, sid, StringComparison.Ordinal))
-                {
-                    //Maybe SignalR to notify clients
-                    //await HttpContext.SignOutAsync();
-                    await HttpContext.SignOutAsync("Cookies");
-                    SignOut("Cookies", "OpenIdConnect");
-                    return RedirectToAction("Login");
-                }
-            }
+                IdToken = id_token,
+                Username = claims.Where(x => x.Type == "username").FirstOrDefault()?.Value,
+                Email = claims.Where(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault()?.Value,
+                Sub = claims.Where(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").FirstOrDefault()?.Value
+            };
 
-            return RedirectToAction("Login");
+            return View(privacyViewModel);
         }
+
+
 
 
 

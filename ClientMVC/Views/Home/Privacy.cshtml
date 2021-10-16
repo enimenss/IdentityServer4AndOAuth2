@@ -1,6 +1,12 @@
-﻿@{
+﻿@model ClientMVC.Models.PrivacyViewModel
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<table>
+    <tr><td>Subject: </td><th>@Model.Sub</th></tr>
+    <tr><td>Email: </td><th>@Model.Email</th></tr>
+    <tr><td>Username: </td><th>@Model.Username</th></tr>
+    <tr><td>ID Token: </td><th>@Model.IdToken</th></tr>
+</table>

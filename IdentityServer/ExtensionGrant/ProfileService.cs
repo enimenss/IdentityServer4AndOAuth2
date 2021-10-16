@@ -34,14 +34,10 @@ namespace IdentityServer.ExtensionGrant
 				}
 				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "custom.profile"))
 				{
-					var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
-					var usernameClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "username");
+					var username = context.Subject.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
 					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
-					context.IssuedClaims.Add(subClaim);
-					if (usernameClaim != null)
-					{
-						context.IssuedClaims.Add(usernameClaim);
-					}
+
+					context.IssuedClaims.Add(new System.Security.Claims.Claim("username", username));
 					context.IssuedClaims.Add(emailClaim);
 				}
 
@@ -49,18 +45,24 @@ namespace IdentityServer.ExtensionGrant
 
 			if (context.Caller.Equals("UserInfoEndpoint"))
 			{
-				var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
-				if(subClaim != null)
-                {
-					var user = await _userManager.FindByIdAsync(subClaim.Value);
-					if(user != null)
-                    {
-						context.IssuedClaims = context.Subject.Claims.ToList();
-						var claims = await _userManager.GetClaimsAsync(user);
-						context.IssuedClaims.AddRange(claims);
-                    }
-                }
-				//return user info claims
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "openid"))
+				{
+					var subClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
+					context.IssuedClaims.Add(subClaim);
+				}
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "email"))
+				{
+					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
+					context.IssuedClaims.Add(emailClaim);
+				}
+				if (context.RequestedResources.Resources.IdentityResources.Any(x => x.Name == "custom.profile"))
+				{
+					var username = context.Subject.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
+					var emailClaim = context.Subject.Claims.FirstOrDefault(x => x.Type == "email");
+
+					context.IssuedClaims.Add(new System.Security.Claims.Claim("username", username));
+					context.IssuedClaims.Add(emailClaim);
+				}
 			}
 
 			if (context.Caller.Equals("ClaimsProviderAccessToken"))

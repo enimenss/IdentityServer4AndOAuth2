@@ -12,7 +12,17 @@ export class HomeComponent implements OnInit {
 
   constructor(private oidcSecurityService: OidcSecurityService) { }
 
+  subject: any;
+  email: string;
+  id_token: string
+
   ngOnInit(): void {
+    this.oidcSecurityService.userData$.subscribe((user) => {
+      console.log("User -->", user);
+      this.subject = user.sub;
+      this.email = user.email;
+      this.id_token = this.oidcSecurityService.getIdToken();
+    })
   }
 
   login() {

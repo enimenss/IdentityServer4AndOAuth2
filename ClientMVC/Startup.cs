@@ -52,12 +52,15 @@ namespace ClientMVC
                  options.GetClaimsFromUserInfoEndpoint = true;
                  options.TokenValidationParameters = new TokenValidationParameters
                   {
-                      ValidAudience = "ClientMVC"
+                      ValidAudience = "ClientMVC",
                   };
                   options.RequireHttpsMetadata = false;
                   options.Scope.Clear();
                   options.Scope.Add("openid");
                   options.Scope.Add("custom.profile");
+                  options.ClaimActions.MapUniqueJsonKey("username", "username");
+                  options.ClaimActions.MapUniqueJsonKey("email", "email");
+                  options.ClaimActions.MapUniqueJsonKey("sub", "sub");
               });
 
             services
